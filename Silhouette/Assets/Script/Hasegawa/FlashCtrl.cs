@@ -30,17 +30,13 @@ public class FlashCtrl : MonoBehaviour
 
     private bool flash = false;
 
-    public bool GetFalsh()
-    {
-        return flash;
-    }
-
     enum Mode
     {
         PrimaryFlash = 0,
         RateTime = 1,
         SecondaryFlash = 2,
-        NotFlash = 4
+        NotFlash = 4,
+        StopFlash = 10
     }
 
     Mode nowmode = Mode.NotFlash;
@@ -126,5 +122,18 @@ public class FlashCtrl : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public bool GetFlash()
+    {
+        return flash;
+    }
+
+    public void StopFlash()
+    {
+        nowmode = Mode.StopFlash;
+        FlashSprite.color = new Color(1, 1, 1, 1);
+        dummyctrl.ChangeDefaultColor();
+        platformctrl.VisiblePlatform();
     }
 }
