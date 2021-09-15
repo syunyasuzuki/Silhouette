@@ -19,6 +19,6 @@ public class Sample_H : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(flashctrl.GetFalsh());
+        Debug.Log(flashctrl.GetFlash());
     }
 }
