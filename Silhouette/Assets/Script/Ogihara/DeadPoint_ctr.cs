@@ -25,7 +25,7 @@ public class DeadPoint_ctr : MonoBehaviour
         {
             alpha = 1;
             flashcon.StopFlash();
-            exc_mark.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, alpha);
+            exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
             Player_test.move_check = false;
         }
         Debug.Log(found_check);
