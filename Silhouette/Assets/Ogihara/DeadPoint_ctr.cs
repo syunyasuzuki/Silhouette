@@ -8,11 +8,12 @@ public class DeadPoint_ctr : MonoBehaviour
     bool found_check;
     [SerializeField] GameObject exc_mark;
     float alpha;
+    FlashCtrl flashcon;
     // Start is called before the first frame update
     void Start()
     {
         found_check = false;
-        //GameObject.Find("") = GetComponent<FlashCtrl>();
+        flashcon = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
         alpha = 0;
         exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
     }
@@ -20,32 +21,29 @@ public class DeadPoint_ctr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(GetFlash() == true && found_check==true)
-        //{
-        //alpha = 1;
-        //Flashctrl.StopFlash();
-        //exc_mark.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, alpha);
-        //}
-        if(found_check == false)
+        if (flashcon.GetFlash() == true && found_check == false)
         {
             alpha = 1;
-            exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
+            flashcon.StopFlash();
+            exc_mark.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, alpha);
+            Player_test.move_check = false;
         }
+        Debug.Log(found_check);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerStay2D(Collider2D col)
     {
-        if (gameObject.tag == "Wall")
+        if (col.gameObject.tag == "Wall")
         {
-            found_check = false;
+            found_check = true;
         }
     }
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (gameObject.tag == "Wall")
+        if (col.gameObject.tag == "Wall")
         {          
-            found_check = true;
+            found_check = false;
         }
     }
 }

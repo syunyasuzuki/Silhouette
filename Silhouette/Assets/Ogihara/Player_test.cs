@@ -15,6 +15,7 @@ public class Player_test : MonoBehaviour
     float jump;
     Animator animator;
     bool now_jump;
+    public static bool move_check;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class Player_test : MonoBehaviour
         animator = GetComponent<Animator>();
         box2D = GetComponent<BoxCollider2D>();
         now_jump = false;
+        move_check = true;
     }
 
     void PlayerCon()
@@ -75,6 +77,14 @@ public class Player_test : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerCon();
+        if (move_check == true)
+        {
+            PlayerCon();
+        }
+        else
+        {
+            animator.SetFloat("JumpFloat", 0.0f);
+            animator.SetFloat("WalkFloat", 0.0f);
+        }
     }
 }
