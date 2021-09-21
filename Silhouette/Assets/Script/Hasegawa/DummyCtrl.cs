@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class DummyCtrl : MonoBehaviour
 {
+    //背景に配置する偽物
     [SerializeField] GameObject DummyObject = null;
 
+    //偽物の数
     [SerializeField] int CreateNumberOfDummy = 10;
 
+    //偽物一つのデータ
     private struct DummyData
     {
         private GameObject dummy;
         private SpriteRenderer sr;
 
+        /// <summary>
+        /// 偽物の作成
+        /// </summary>
         public void Create(GameObject d)
         {
             dummy = Instantiate(d);
@@ -21,32 +27,38 @@ public class DummyCtrl : MonoBehaviour
             sr = dummy.GetComponent<SpriteRenderer>();
         }
 
+        //偽物の削除
         public void Delete()
         {
             Destroy(dummy.gameObject);
             sr = null;
         }
 
-        public void ChangeAlpha(float a)
+        //a値の変更
+        public void ChangeAlpha(byte a)
         {
-            sr.color = new Color(1f / 255 * 60, 1f / 255 * 60, 1f / 255 * 60, a);
+            sr.color = new Color32(60, 60, 60, a);
         }
 
+        //色を黒色にする
         public void Color_LightBlack()
         {
             //sr.color = new Color(1f / 255 * 33, 1f / 255 * 33, 1f / 255 * 33, 1);
-            sr.color = new Color(0, 0, 0, 1);
+            sr.color = new Color32(0, 0, 0, 255);
         }
 
+        //色を灰色にする
         public void Color_Default()
         {
             //sr.color = new Color(1f / 255 * 199, 1f / 255 * 21, 1f / 255 * 133, 1);
-            sr.color = new Color(1f / 255 * 60, 1f / 255 * 60, 1f / 255 * 60, 1);
+            sr.color = new Color32(60, 60, 60, 255);
         }
     }
 
+    //生成した偽物
     DummyData[] DummyDataList = null;
 
+    //偽物を生成する
     private void CreateDummyObjects()
     {
         DummyDataList = new DummyData[CreateNumberOfDummy];
@@ -59,6 +71,9 @@ public class DummyCtrl : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 偽物のa値を変える
+    /// </summary>
     public void ChangeAlpha(float a)
     {
         for(int i = 0; i < CreateNumberOfDummy; ++i)
@@ -67,6 +82,9 @@ public class DummyCtrl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 偽物の色を灰色にする
+    /// </summary>
     public void ChangeDefaultColor()
     {
         for(int i = 0; i < CreateNumberOfDummy; ++i)
@@ -75,6 +93,9 @@ public class DummyCtrl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 偽物の色を黒色にする
+    /// </summary>
     public void ChangeDummyColor()
     {
         for (int i = 0; i < CreateNumberOfDummy; ++i)

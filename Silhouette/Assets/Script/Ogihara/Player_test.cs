@@ -15,7 +15,7 @@ public class Player_test : MonoBehaviour
     float jump;
     Animator animator;
     bool now_jump;
-    public static bool move_check;
+    public static bool move_check;//動けるかどうか
 
     // Start is called before the first frame update
     void Start()
@@ -71,7 +71,7 @@ public class Player_test : MonoBehaviour
         {
             now_jump = false;
             animator.SetFloat("JumpFloat", 0.0f);
-        }
+        }           
     }
 
     // Update is called once per frame
@@ -85,6 +85,6 @@ public class Player_test : MonoBehaviour
         {
             animator.SetFloat("JumpFloat", 0.0f);
             animator.SetFloat("WalkFloat", 0.0f);
-        }
+        }      
     }
 }
