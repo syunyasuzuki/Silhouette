@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     /// エネミーオーラの色
     /// </summary>
     float red;
+
     /// <summary>
     /// オーラの色を切り替えるタイミング
     /// </summary>
@@ -18,11 +19,17 @@ public class Enemy : MonoBehaviour
     /// </summary>
     float aura_speed = 0.3f;
 
+    /// <summary>
+    /// アニメーター
+    /// </summary>
     private Animator animator;
 
+    /// <summary>
+    /// ゲームオーバーシーンのオーラの速度
+    /// </summary>
     float eat_red_speed = 1.0f;
-
-    bool deth_swich;
+ 
+    bool death_switch;
 
     // Start is called before the first frame update
     void Start()
@@ -30,19 +37,18 @@ public class Enemy : MonoBehaviour
         color_switch = false;
         animator = GetComponent<Animator>();
 
-        deth_swich = false;
+        death_switch = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            deth_swich = true;
+            death_switch = true;
         }
 
-        if(deth_swich)
+        if(death_switch)
         {
             Enemy_Eat();
         }
@@ -51,7 +57,7 @@ public class Enemy : MonoBehaviour
             Enemy_aura();
         }
         gameObject.GetComponent<SpriteRenderer>().color = new Color(red, 0, 0);
-        Debug.Log(deth_swich);
+        Debug.Log(death_switch);
     }
 
     /// <summary>
