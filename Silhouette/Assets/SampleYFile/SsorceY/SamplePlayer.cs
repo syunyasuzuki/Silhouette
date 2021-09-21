@@ -4,21 +4,33 @@ using UnityEngine;
 
 public class SamplePlayer : MonoBehaviour
 {
+    GameObject eye;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        eye = GameObject.Find("eye");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        playerposs();
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            transform.position += transform.right * 2.0f * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            transform.position -= transform.right * 2.0f * Time.deltaTime;
+        }
     }
 
-    float Setpos(float pos_x,float pos_y)
+    void playerposs()
     {
-        return 0;
+        eye.GetComponent<Sample_Y>().SetTargetPos(transform.position.x, transform.position.y);
     }
 }
