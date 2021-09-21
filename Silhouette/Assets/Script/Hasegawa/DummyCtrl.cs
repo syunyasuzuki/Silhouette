@@ -27,6 +27,11 @@ public class DummyCtrl : MonoBehaviour
             sr = null;
         }
 
+        public void ChangeAlpha(float a)
+        {
+            sr.color = new Color(1f / 255 * 60, 1f / 255 * 60, 1f / 255 * 60, a);
+        }
+
         public void Color_LightBlack()
         {
             //sr.color = new Color(1f / 255 * 33, 1f / 255 * 33, 1f / 255 * 33, 1);
@@ -52,6 +57,14 @@ public class DummyCtrl : MonoBehaviour
         }
 
 
+    }
+
+    public void ChangeAlpha(float a)
+    {
+        for(int i = 0; i < CreateNumberOfDummy; ++i)
+        {
+            //DummyDataList[i].ChangeAlpha(a);
+        }
     }
 
     public void ChangeDefaultColor()
