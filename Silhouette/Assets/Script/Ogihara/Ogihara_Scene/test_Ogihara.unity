@@ -423,6 +423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   came: {fileID: 1736891697}
+  came_move_max: 0
+  came_move_min: -10
 --- !u!1001 &6026839958428714026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -489,6 +491,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026839958947780346, guid: aa7c81284445f0942ba711b28bb86979,
+        type: 3}
+      propertyPath: speed
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa7c81284445f0942ba711b28bb86979, type: 3}
