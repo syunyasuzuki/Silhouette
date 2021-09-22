@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//雷の音をランダムで流す
 public class ThunderSECtrl : MonoBehaviour
 {
+    //再生する雷の効果音
     [SerializeField] AudioClip[] ThunderSE = new AudioClip[3];
 
+    //再生するところ
     AudioSource audiosource = null;
 
     private void Start()

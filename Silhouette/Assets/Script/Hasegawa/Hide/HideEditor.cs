@@ -1,49 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class HideEditor : MonoBehaviour
 {
     private Camera maincamera = null;
 
-    [SerializeField] Sprite PlatformBlock = null;
+    //背景の黒色の素材
+    [SerializeField] Sprite BackImg = null;
 
-    string SpriteFolder = "Image/HidePlatformImage";
+    //乗ることのできる足場の素材
+    [SerializeField] Sprite PlatformImg = null;
 
-    private void CreatePlatformImage(List<List<int>> BackData, List<List<int>> PlatformData)
+    //保存先
+    string SpriteFolderPath = "Image/HidePlatformImage";
+
+    //保存先に更にファイルを作成する場合入力する場所
+    [SerializeField] string OriginalFilePath = null;
+
+    //保存先を確定しチェックする
+    private void CheckFilePath()
     {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        SpriteFolderPath = Path.Combine(Application.dataPath + @"\Resources", SpriteFolderPath);
+        if (OriginalFilePath != null)
+        {
+            SpriteFolderPath = Path.Combine(SpriteFolderPath, OriginalFilePath);
+        }
+        if (!Directory.Exists(SpriteFolderPath))
+        {
+            Directory.CreateDirectory(SpriteFolderPath);
+        }
     }
 
+    //マウスの処理
+    //
+    private void MouseTask()
+    {
 
-
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
         maincamera = Camera.main;
+        CheckFilePath();
 
-        List<List<int>> b = new List<List<int>>();
         
+
 
 
     }
