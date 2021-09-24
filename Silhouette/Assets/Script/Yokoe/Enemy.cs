@@ -28,13 +28,12 @@ public class Enemy : MonoBehaviour
     /// ゲームオーバーシーンのオーラの速度
     /// </summary>
     float eat_red_speed = 1.0f;
- 
-    bool death_switch;
 
     FlashCtrl flashCtrl;
 
-    [SerializeField]GameObject eye_back;
-    [SerializeField]GameObject eye;
+    [SerializeField] GameObject Player;
+    [SerializeField] GameObject eye_back;
+    [SerializeField] GameObject eye;
 
     float enemy_alpha = 0.0f;
 
@@ -48,8 +47,6 @@ public class Enemy : MonoBehaviour
 
         flashCtrl = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
 
-        death_switch = false;
-
         gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
         eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
         eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
@@ -58,21 +55,6 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            death_switch = true;
-        }
-
-        if(death_switch)
-        {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-            //Enemy_Eat();
-        }
-        else
-        {
-            Enemy_aura();
-        }
-
         Enemy_alphaChange();
     }
 
@@ -141,6 +123,7 @@ public class Enemy : MonoBehaviour
 
     void GameOver()
     {
-
+        Fade_ctr.main_fade = true;
+        Fade_ctr.main_fade_out = true;
     }
 }
