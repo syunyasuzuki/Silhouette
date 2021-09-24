@@ -8,15 +8,17 @@ public class Fade_ctr : MonoBehaviour
 {
     Camera cam;
 
-    [SerializeField] GameObject death_fade_image1;
-    [SerializeField] GameObject death_fade_image2;
+    //[SerializeField] GameObject death_fade_image1;
+    //[SerializeField] GameObject death_fade_image2;
 
     [SerializeField] Image fade_image;
+    [SerializeField] Image clear_image;
 
     float image1_pos_y;
     float image2_pos_y;
 
     float alpha;
+    float clear_alpha;
 
     float stay_time;
     const float main_fade_speed = 1.0f;
@@ -25,6 +27,8 @@ public class Fade_ctr : MonoBehaviour
     bool death_fade;
     bool death_fade_in;
     bool death_fade_out;
+
+    public static bool clear_fade;
 
     public static bool main_fade;
     public static bool main_fade_in;
@@ -43,14 +47,18 @@ public class Fade_ctr : MonoBehaviour
         main_fade_in = true;
         main_fade_out = false;
 
+        clear_fade = false;
+
         image1_pos_y = -10.0f;
         image2_pos_y = 10.0f;
 
         alpha = 1.0f;
+        clear_alpha = 0.0f;
 
+        clear_image.color = new Color(0.0f, 0.0f, 0.0f, clear_alpha);
         fade_image.color = new Color(0.0f, 0.0f, 0.0f, alpha);
-        death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
-        death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
+        //death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
+        //death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
     }
 
     // Update is called once per frame
@@ -85,6 +93,26 @@ public class Fade_ctr : MonoBehaviour
                 MainFadeOut();
             }
         }
+
+        if(clear_fade == true)
+        {
+            ClearFade();
+        }
+    }
+
+    void ClearFade()
+    {
+        clear_alpha += 0.5f * Time.deltaTime;
+        if(clear_alpha >= 1.0f)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                clear_fade = false;
+                main_fade = true;
+                main_fade_out = true;
+            }
+        }
+        clear_image.color = new Color(1.0f, 1.0f, 1.0f, clear_alpha);
     }
 
     void MainFadeIn()
@@ -126,8 +154,8 @@ public class Fade_ctr : MonoBehaviour
             }
         }
 
-        death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
-        death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
+        //death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
+        //death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
     }
 
     void DeathFadeOut()
@@ -142,7 +170,7 @@ public class Fade_ctr : MonoBehaviour
             death_fade_out = false;
         }
 
-        death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
-        death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
+        //death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
+        //death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
     }
 }

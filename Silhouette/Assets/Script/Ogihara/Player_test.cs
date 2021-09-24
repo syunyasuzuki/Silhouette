@@ -25,6 +25,7 @@ public class Player_test : MonoBehaviour
         box2D = GetComponent<BoxCollider2D>();
         now_jump = false;
         move_check = true;
+        rig2D.isKinematic = false;
     }
 
     void PlayerCon()
@@ -92,6 +93,15 @@ public class Player_test : MonoBehaviour
         {
             animator.SetFloat("JumpFloat", 0.0f);
             animator.SetFloat("WalkFloat", 0.0f);
+            rig2D.isKinematic = true;
+            rig2D.velocity = Vector2.zero;
         }      
+    }
+    void OnColliderEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == ("Goal"))
+        {
+            Fade_ctr.clear_fade = true;
+        }
     }
 }
