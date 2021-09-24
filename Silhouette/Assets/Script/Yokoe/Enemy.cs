@@ -31,11 +31,15 @@ public class Enemy : MonoBehaviour
  
     bool death_switch;
 
+    FlashCtrl flashCtrl;
+
     // Start is called before the first frame update
     void Start()
     {
         color_switch = false;
         animator = GetComponent<Animator>();
+
+        flashCtrl = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
 
         death_switch = false;
     }
@@ -56,8 +60,16 @@ public class Enemy : MonoBehaviour
         {
             Enemy_aura();
         }
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(red, 0, 0);
-        Debug.Log(death_switch);
+
+        if(!flashCtrl.GetFlash())
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
+        }
+        else
+        {
+            Enemy_aura();
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(red, 0, 0);
+        }
     }
 
     /// <summary>
