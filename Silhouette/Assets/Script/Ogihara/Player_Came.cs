@@ -86,7 +86,7 @@ public class Player_Came : MonoBehaviour
                     camepos = cameTransform.position;
                     LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 }
-                cameTransform.position = camepos;               
+                cameTransform.position = camepos;
                 //if (Input.GetKeyDown(KeyCode.Z))
                 //{                    
                 //    Player_test.move_check = false;

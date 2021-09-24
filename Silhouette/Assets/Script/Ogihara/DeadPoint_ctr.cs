@@ -10,6 +10,7 @@ public class DeadPoint_ctr : MonoBehaviour
     float alpha;
     FlashCtrl flashcon;
     public static bool exc_mark_check;
+    Enemy enemycon;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,7 @@ public class DeadPoint_ctr : MonoBehaviour
         flashcon = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
         alpha = 0;
         exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
+        enemycon = GameObject.Find("Enemybody").GetComponent<Enemy>();
     }
 
     // Update is called once per frame
@@ -30,6 +32,7 @@ public class DeadPoint_ctr : MonoBehaviour
             exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
             Player_test.move_check = false;
             exc_mark_check = true;
+            enemycon.Enemy_Eat();
         }       
     }
 
