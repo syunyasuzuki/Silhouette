@@ -97,7 +97,7 @@ public class Player_test : MonoBehaviour
             rig2D.velocity = Vector2.zero;
         }      
     }
-    void OnCollisionEnter2D(Collider2D other)
+    void OnColliderEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == ("Goal"))
         {
