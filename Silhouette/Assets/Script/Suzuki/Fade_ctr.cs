@@ -8,8 +8,8 @@ public class Fade_ctr : MonoBehaviour
 {
     Camera cam;
 
-    [SerializeField] GameObject death_fade_image1;
-    [SerializeField] GameObject death_fade_image2;
+    //[SerializeField] GameObject death_fade_image1;
+    //[SerializeField] GameObject death_fade_image2;
 
     [SerializeField] Image fade_image;
 
@@ -49,8 +49,8 @@ public class Fade_ctr : MonoBehaviour
         alpha = 1.0f;
 
         fade_image.color = new Color(0.0f, 0.0f, 0.0f, alpha);
-        death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
-        death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
+        //death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
+        //death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
     }
 
     // Update is called once per frame
@@ -126,8 +126,8 @@ public class Fade_ctr : MonoBehaviour
             }
         }
 
-        death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
-        death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
+        //death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
+        //death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
     }
 
     void DeathFadeOut()
@@ -142,7 +142,7 @@ public class Fade_ctr : MonoBehaviour
             death_fade_out = false;
         }
 
-        death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
-        death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
+        //death_fade_image1.transform.position = new Vector3(0.0f, image1_pos_y, 0.0f);
+        //death_fade_image2.transform.position = new Vector3(0.0f, image2_pos_y, 0.0f);
     }
 }
