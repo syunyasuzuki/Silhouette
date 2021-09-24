@@ -121,6 +121,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &134991707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 742302438432522688, guid: 90a1c6cb4b5a64445b7d5152c7ccf488,
+    type: 3}
+  m_PrefabInstance: {fileID: 742302438327321101}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &273599622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -190,6 +196,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 401dc5a72d37ff04d9898a1c50bf6184, type: 3}
+--- !u!1 &297346117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7141829750180105854, guid: d95af79f7540011409a4b23e3443193c,
+    type: 3}
+  m_PrefabInstance: {fileID: 7141829750228224488}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &357950731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -296,7 +308,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.24670702, g: 0.32187423, b: 0.7924528, a: 0}
+  m_BackGroundColor: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -934,6 +946,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 742302438432522691, guid: 90a1c6cb4b5a64445b7d5152c7ccf488,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 90a1c6cb4b5a64445b7d5152c7ccf488, type: 3}
 --- !u!1001 &7141829750228224488
@@ -947,6 +964,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemybody
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141829750066872452, guid: d95af79f7540011409a4b23e3443193c,
+        type: 3}
+      propertyPath: eye
+      value: 
+      objectReference: {fileID: 134991707}
+    - target: {fileID: 7141829750066872452, guid: d95af79f7540011409a4b23e3443193c,
+        type: 3}
+      propertyPath: eye_back
+      value: 
+      objectReference: {fileID: 297346117}
+    - target: {fileID: 7141829750066872453, guid: d95af79f7540011409a4b23e3443193c,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7141829750066872454, guid: d95af79f7540011409a4b23e3443193c,
         type: 3}
@@ -1002,6 +1034,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141829750180105855, guid: d95af79f7540011409a4b23e3443193c,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d95af79f7540011409a4b23e3443193c, type: 3}

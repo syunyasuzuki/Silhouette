@@ -135,5 +135,12 @@ public class Enemy : MonoBehaviour
         {
             animator.SetFloat("EatFloat", 0.5f);
         }
+
+        Invoke(nameof(GameOver),2.0f);
+    }
+
+    void GameOver()
+    {
+
     }
 }
