@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EyeCon : MonoBehaviour
 {
+    [SerializeField] GameObject target;
+
     /// <summary>
     /// ターゲットの座標
     /// </summary>
@@ -29,6 +31,8 @@ public class EyeCon : MonoBehaviour
     /// </summary>
     GameObject Enemybody;
 
+    Camera cam;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,11 +40,15 @@ public class EyeCon : MonoBehaviour
 
         //初期位置を取得
         start_pos = Enemybody.transform.position;
+
+        cam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //ターゲットの座標を取得
+        target_pos = target.transform.position;
         Eye_move();
     }
 
@@ -50,7 +58,7 @@ public class EyeCon : MonoBehaviour
     void Eye_move()
     {
         //ベクトル
-        Vector3 direction = (target_pos - start_pos);
+        Vector3 direction = (target_pos - cam.transform.position);
 
         //円の範囲内にプレイヤーがいるとき
         if (direction.magnitude < radius) 
@@ -60,17 +68,8 @@ public class EyeCon : MonoBehaviour
         else
         {
             direction = direction.normalized;
-            transform.position = new Vector2(radius * direction.x, radius * direction.y);
+            transform.position = new Vector2(cam.transform.position.x+radius * direction.x, radius * direction.y);
+           
         }
-    }
-
-    /// <summary>
-    /// ターゲットの座標取得
-    /// </summary>
-    /// <param name="x">プレイヤーのx座標</param>
-    /// <param name="y">プレイヤーのy座標</param>
-    public void SetTargetPos(float x,float y)
-    {
-        target_pos = new Vector3(x, y, 0);
     }
 }

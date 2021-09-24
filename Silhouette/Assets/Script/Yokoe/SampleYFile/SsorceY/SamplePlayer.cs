@@ -29,8 +29,8 @@ public class SamplePlayer : MonoBehaviour
         }
     }
 
-    void playerposs()
-    {
-        eye.GetComponent<EyeCon>().SetTargetPos(transform.position.x, transform.position.y);
-    }
+    //void playerposs()
+    //{
+    //    eye.GetComponent<EyeCon>().SetTargetPos(transform.position.x, transform.position.y);
+    //}
 }
