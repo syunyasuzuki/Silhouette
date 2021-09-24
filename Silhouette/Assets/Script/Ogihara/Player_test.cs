@@ -72,6 +72,13 @@ public class Player_test : MonoBehaviour
             now_jump = false;
             animator.SetFloat("JumpFloat", 0.0f);
         }           
+
+        //離したときにアニメーションを止める
+        if(Input.GetKeyUp(KeyCode.A)|| Input.GetKeyUp(KeyCode.LeftArrow)
+            || Input.GetKeyUp(KeyCode.D)|| Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            animator.SetFloat("WalkFloat", 0.0f);
+        }
     }
 
     // Update is called once per frame
