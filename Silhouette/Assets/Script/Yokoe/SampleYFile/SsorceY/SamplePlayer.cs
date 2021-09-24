@@ -16,7 +16,7 @@ public class SamplePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerposs();
+        //playerposs();
 
         if (Input.GetKey(KeyCode.RightArrow))
         {

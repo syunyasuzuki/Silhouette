@@ -33,6 +33,13 @@ public class Enemy : MonoBehaviour
 
     FlashCtrl flashCtrl;
 
+    [SerializeField]GameObject eye_back;
+    [SerializeField]GameObject eye;
+
+    float enemy_alpha = 0.0f;
+
+    float alpha_speed = 3.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +49,10 @@ public class Enemy : MonoBehaviour
         flashCtrl = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
 
         death_switch = false;
+
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
+        eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
+        eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
     }
 
     // Update is called once per frame
@@ -54,21 +65,39 @@ public class Enemy : MonoBehaviour
 
         if(death_switch)
         {
-            Enemy_Eat();
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+            //Enemy_Eat();
         }
         else
         {
             Enemy_aura();
         }
 
-        if(!flashCtrl.GetFlash())
+        Enemy_alphaChange();
+    }
+
+    /// <summary>
+    /// エネミーのa値変更
+    /// </summary>
+    void Enemy_alphaChange()
+    {
+        if (!flashCtrl.GetFlash())
         {
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
+            if (enemy_alpha != 0.0f)
+            {
+                enemy_alpha -= alpha_speed * Time.deltaTime;
+            }
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
+            eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+            eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
         }
         else
         {
+            enemy_alpha = 1.0f;
             Enemy_aura();
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(red, 0, 0);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(red, 0.0f, 0.0f, enemy_alpha);
+            eye_back.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, enemy_alpha);
+            eye.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, enemy_alpha);
         }
     }
 
