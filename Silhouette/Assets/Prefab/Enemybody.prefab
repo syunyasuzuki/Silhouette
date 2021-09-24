@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 4
   m_Sprite: {fileID: 8596640243658272642, guid: dd44b9abea305f5439c4fdb573f1fa83,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b794fecc972a54ea612ad4c7de5b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eye_back: {fileID: 0}
+  eye: {fileID: 0}
 --- !u!95 &7141829750066872455
 Animator:
   serializedVersion: 3
@@ -185,7 +187,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -9
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7a0c3077ad2a00d41b0949ed26b63030, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

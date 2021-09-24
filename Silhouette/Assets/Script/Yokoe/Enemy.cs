@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
 
     FlashCtrl flashCtrl;
 
-    [SerializeField] GameObject Player;
     [SerializeField] GameObject eye_back;
     [SerializeField] GameObject eye;
 
