@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Fade_ctr : MonoBehaviour
 {
@@ -101,6 +102,7 @@ public class Fade_ctr : MonoBehaviour
         alpha += main_fade_speed * Time.deltaTime;
         if (alpha >= 1.0f)
         {
+            SceneManager.LoadScene("GameScene");
             main_fade = false;
             main_fade_out = false;
         }
