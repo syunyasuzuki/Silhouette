@@ -31,6 +31,6 @@ public class SamplePlayer : MonoBehaviour
 
     void playerposs()
     {
-        eye.GetComponent<Sample_Y>().SetTargetPos(transform.position.x, transform.position.y);
+        eye.GetComponent<EyeCon>().SetTargetPos(transform.position.x, transform.position.y);
     }
 }

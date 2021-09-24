@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sample_Y : MonoBehaviour
+public class EyeCon : MonoBehaviour
 {
     /// <summary>
     /// ターゲットの座標
