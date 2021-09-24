@@ -51,7 +51,7 @@ public class DummyCtrl : MonoBehaviour
         public void Color_Default()
         {
             //sr.color = new Color(1f / 255 * 199, 1f / 255 * 21, 1f / 255 * 133, 1);
-            sr.color = new Color32(60, 60, 60, 255);
+            sr.color = new Color32(0, 10, 40, 255);
         }
     }
 
