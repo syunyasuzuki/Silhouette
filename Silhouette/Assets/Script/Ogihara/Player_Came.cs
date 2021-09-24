@@ -75,17 +75,17 @@ public class Player_Came : MonoBehaviour
                     camepos.x = 0.0f;
                     LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 }
-                float camedistance = Vector2.Distance(playerpos, camepos);
-                if (camedistance >= came_move_max || camedistance == came_move_max)
-                {
-                    camepos = cameTransform.position;
-                   RightArrow .GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                }
-                else if(camedistance <= came_move_min || camedistance == came_move_min)
-                {
-                    camepos = cameTransform.position;
-                    LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                }
+                //float camedistance = Vector2.Distance(playerpos, camepos);
+                //if (camedistance >= came_move_max || camedistance == came_move_max)
+                //{
+                //    camepos = cameTransform.position;
+                //   RightArrow .GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                //}
+                //else if(camedistance <= came_move_min || camedistance == came_move_min)
+                //{
+                //    camepos = cameTransform.position;
+                //    LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                //}
                 cameTransform.position = camepos;
                 //if (Input.GetKeyDown(KeyCode.Z))
                 //{                    
