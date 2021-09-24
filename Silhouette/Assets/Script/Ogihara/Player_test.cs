@@ -16,6 +16,7 @@ public class Player_test : MonoBehaviour
     Animator animator;
     bool now_jump;
     public static bool move_check;//動けるかどうか
+    FlashCtrl flashcon_player;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class Player_test : MonoBehaviour
         now_jump = false;
         move_check = true;
         rig2D.isKinematic = false;
+        flashcon_player = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
     }
 
     void PlayerCon()
@@ -93,11 +95,15 @@ public class Player_test : MonoBehaviour
         {
             animator.SetFloat("JumpFloat", 0.0f);
             animator.SetFloat("WalkFloat", 0.0f);
+        }      
+
+        if(flashcon_player.GetFlash() == true && DeadPoint_ctr.found_check == false)
+        {
             rig2D.isKinematic = true;
             rig2D.velocity = Vector2.zero;
-        }      
+        }
     }
-    void OnColliderEnter2D(Collider2D other)
+    void OnCoEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == ("Goal"))
         {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DeadPoint_ctr : MonoBehaviour
 {
-    bool found_check;
+    public static bool found_check;
     [SerializeField] GameObject exc_mark;
     float alpha;
     FlashCtrl flashcon;
