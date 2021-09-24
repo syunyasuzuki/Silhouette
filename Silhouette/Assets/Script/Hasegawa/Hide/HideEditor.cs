@@ -129,24 +129,24 @@ public class HideEditor : MonoBehaviour
     [SerializeField] Text PNGFileName = null;
 
     //現在のタイル情報をPNGとして書き出す
-    public void WritePng()
+    public void WritePlatformPng()
     {
-        if(PNGFileName == null)
+        if (PNGFileName == null)
         {
             Debug.Log("Please PNG Name !!");
             return;
         }
 
         Texture2D tex2d = new Texture2D(PlatformPixelPerUnit * HideSize.x, PlatformPixelPerUnit * HideSize.y);
-        for(int y = 0; y < HideSize.y; ++y)
+        for (int y = 0; y < HideSize.y; ++y)
         {
-            for(int x = 0; x < HideSize.x; ++x)
+            for (int x = 0; x < HideSize.x; ++x)
             {
                 if (PlatformTileData[y][x] == 1)
                 {
-                    for(int py = 0; py < PlatformPixelPerUnit; ++py)
+                    for (int py = 0; py < PlatformPixelPerUnit; ++py)
                     {
-                        for(int px = 0; px < PlatformPixelPerUnit; ++px)
+                        for (int px = 0; px < PlatformPixelPerUnit; ++px)
                         {
                             tex2d.SetPixel(PlatformPixelPerUnit * x + px, PlatformPixelPerUnit * y + py, PlatformImg.texture.GetPixel(px, py));
                         }
@@ -169,10 +169,39 @@ public class HideEditor : MonoBehaviour
 
         Debug.Log(Path.Combine(SpriteFolderPath, PNGFileName.text + ".png"));
 
-        File.WriteAllBytes(Path.Combine(SpriteFolderPath, PNGFileName.text + ".png"), bytedata);
+        File.WriteAllBytes(Path.Combine(SpriteFolderPath, PNGFileName.text + "_platform.png"), bytedata);
 
         PNGFileName.text = "";
     }
+
+    //現在のタイル情報をPNGとして書き出す
+    public void WriteBackPng()
+    {
+        if (PNGFileName == null)
+        {
+            Debug.Log("Please PNG Name !!");
+            return;
+        }
+
+        Texture2D tex2d = new Texture2D(PlatformPixelPerUnit * HideSize.x, PlatformPixelPerUnit * HideSize.y);
+        for (int y = 0; y < PlatformPixelPerUnit * HideSize.y; ++y)
+        {
+            for (int x = 0; x < PlatformPixelPerUnit * HideSize.x; ++x)
+            {
+                tex2d.SetPixel(x, y, new Color32(0, 104, 183, 255));
+            }
+        }
+
+        byte[] bytedata = tex2d.EncodeToPNG();
+
+        Debug.Log(Path.Combine(SpriteFolderPath, PNGFileName.text + ".png"));
+
+        File.WriteAllBytes(Path.Combine(SpriteFolderPath, PNGFileName.text + "_back.png"), bytedata);
+
+        PNGFileName.text = "";
+    }
+
+
 
     //スライダーの値が変更された場合全体の大きさを変更する
     private void CheckChangeSlider()
@@ -320,8 +349,15 @@ public class HideEditor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            WritePng();
+            WritePlatformPng();
+            WriteBackPng();
         }
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            DeleteButton();
+        }
+
     }
 
 }

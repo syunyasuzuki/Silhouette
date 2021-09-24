@@ -10,6 +10,10 @@ public class DummyCtrl : MonoBehaviour
     //偽物の数
     [SerializeField] int CreateNumberOfDummy = 10;
 
+    [SerializeField] float Min_pos = -5f;
+
+    [SerializeField] float Max_pos = 100f;
+
     //偽物一つのデータ
     private struct DummyData
     {
@@ -19,11 +23,11 @@ public class DummyCtrl : MonoBehaviour
         /// <summary>
         /// 偽物の作成
         /// </summary>
-        public void Create(GameObject d)
+        public void Create(GameObject d, float min, float max)
         {
             dummy = Instantiate(d);
             dummy.transform.localScale = new Vector3(Random.Range(1.5f, 3.5f), Random.Range(3f, 5f), 1);
-            dummy.transform.position = new Vector3(Random.Range(-7.3f, 7.3f), -4 + dummy.transform.localScale.y / 2f, 0);
+            dummy.transform.position = new Vector3(Random.Range(min, max), -4 + dummy.transform.localScale.y / 2f, 0);
             sr = dummy.GetComponent<SpriteRenderer>();
         }
 
@@ -64,7 +68,7 @@ public class DummyCtrl : MonoBehaviour
         DummyDataList = new DummyData[CreateNumberOfDummy];
         for(int i = 0; i < CreateNumberOfDummy; ++i)
         {
-            DummyDataList[i].Create(DummyObject);
+            DummyDataList[i].Create(DummyObject,Min_pos,Max_pos);
             DummyDataList[i].Color_LightBlack();
         }
 
