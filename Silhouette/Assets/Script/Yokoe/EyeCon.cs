@@ -58,7 +58,7 @@ public class EyeCon : MonoBehaviour
     void Eye_move()
     {
         //ベクトル
-        Vector3 direction = (target_pos - cam.transform.position);
+        Vector3 direction = (target_pos - Enemybody.transform.position);
 
         //円の範囲内にプレイヤーがいるとき
         if (direction.magnitude < radius) 
@@ -68,8 +68,7 @@ public class EyeCon : MonoBehaviour
         else
         {
             direction = direction.normalized;
-            transform.position = new Vector2(cam.transform.position.x+radius * direction.x, radius * direction.y);
-           
+            transform.position = new Vector2(Enemybody.transform.position.x + radius * direction.x, radius * direction.y); 
         }
     }
 }
