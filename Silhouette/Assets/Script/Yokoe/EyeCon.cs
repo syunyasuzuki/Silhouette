@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sample_Y : MonoBehaviour
+public class EyeCon : MonoBehaviour
 {
     /// <summary>
     /// ターゲットの座標
@@ -19,13 +19,23 @@ public class Sample_Y : MonoBehaviour
     /// </summary>
     float radius = 1.0f;
 
+    /// <summary>
+    /// 目玉初期位置
+    /// </summary>
     private Vector3 start_pos;
+
+    /// <summary>
+    /// 敵胴体
+    /// </summary>
+    GameObject Enemybody;
 
     // Start is called before the first frame update
     void Start()
     {
+        Enemybody = GameObject.Find("Enemybody");
+
         //初期位置を取得
-        start_pos = Vector3.zero;
+        start_pos = Enemybody.transform.position;
     }
 
     // Update is called once per frame
