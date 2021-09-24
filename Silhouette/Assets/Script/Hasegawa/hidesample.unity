@@ -1394,7 +1394,7 @@ MonoBehaviour:
   BackImg: {fileID: 21300000, guid: 52cc2f59b4924614aab64b166c9418a1, type: 3}
   PlatformImg: {fileID: 21300000, guid: 1d520b778cf23d34c960b0deaa739d8f, type: 3}
   PlatformPixelPerUnit: 40
-  OriginalFilePath: 
+  OriginalFilePath: SampleStage
   Xsize: {fileID: 836275157}
   Ysize: {fileID: 1189540790}
   PNGFileName: {fileID: 532179687}

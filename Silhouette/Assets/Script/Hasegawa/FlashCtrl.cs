@@ -117,6 +117,7 @@ public class FlashCtrl : MonoBehaviour
                     nowmode = Mode.PrimaryFlash;
                     dummyctrl.ChangeDefaultColor();
                     platformctrl.VisiblePlatform();
+                    platformctrl.ChangeBackColorDefault();
                     time = 0;
                     primaryflashcount = 0;
                     FlashSprite.color = new Color(1, 1, 1, PrimaryFlashValue);
@@ -129,6 +130,7 @@ public class FlashCtrl : MonoBehaviour
                     {
                         dummyctrl.ChangeDummyColor();
                         platformctrl.UnVisiblePlatform();
+                        platformctrl.ChangeBackColorBlack();
                         FlashSprite.color = new Color(1, 1, 1, 0);
                         if (titlevisible == false && nowgamemode == GameMode.Title)
                         {
@@ -139,6 +141,7 @@ public class FlashCtrl : MonoBehaviour
                     {
                         dummyctrl.ChangeDefaultColor();
                         platformctrl.VisiblePlatform();
+                        platformctrl.ChangeBackColorDefault();
                         FlashSprite.color = new Color(1, 1, 1, PrimaryFlashValue);
                         if (titlevisible == false && nowgamemode == GameMode.Title)
                         {
@@ -162,6 +165,7 @@ public class FlashCtrl : MonoBehaviour
                     time = 0;
                     dummyctrl.ChangeDefaultColor();
                     platformctrl.VisiblePlatform();
+                    platformctrl.ChangeBackColorDefault();
                     FlashSprite.color = new Color(1, 1, 1, 1);
                     nowmode = Mode.SecondaryFlash;
                     flash = true;
@@ -184,6 +188,7 @@ public class FlashCtrl : MonoBehaviour
                     time = 0;
                     dummyctrl.ChangeDummyColor();
                     platformctrl.UnVisiblePlatform();
+                    platformctrl.ChangeBackColorBlack();
                     nextflashtime = Random.Range(FlashInterval.x, FlashInterval.y);
                     FlashSprite.color = new Color(1, 1, 1, 0);
                     flash = false;

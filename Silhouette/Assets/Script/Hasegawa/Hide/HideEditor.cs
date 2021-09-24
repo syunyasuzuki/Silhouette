@@ -281,7 +281,7 @@ public class HideEditor : MonoBehaviour
             maincamera.orthographicSize = Mathf.Clamp(maincamera.orthographicSize - x, 5, 30);
         }
 
-        if (EventSystem.current.currentSelectedGameObject == null && Input.GetMouseButtonDown(0))
+        if (EventSystem.current.currentSelectedGameObject == null && Input.GetMouseButton(0))
         {
             Vector3 mouseposition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Mathf.Abs(maincamera.transform.position.z)));
             
