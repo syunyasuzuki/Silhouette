@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyCon : MonoBehaviour
 {
+    /// <summary>
+    /// 白目
+    /// </summary>
+    GameObject eye_back;
+    /// <summary>
+    /// 目玉
+    /// </summary>
+    GameObject eye;
+
     /// <summary>
     /// エネミーオーラの色
     /// </summary>
@@ -29,14 +38,30 @@ public class Enemy : MonoBehaviour
     /// </summary>
     float eat_red_speed = 1.0f;
 
+    /// <summary>
+    /// 光るタイミング
+    /// </summary>
     FlashCtrl flashCtrl;
 
-    [SerializeField] GameObject eye_back;
-    [SerializeField] GameObject eye;
-
+    /// <summary>
+    /// アルファ値
+    /// </summary>
     float enemy_alpha = 0.0f;
 
+    /// <summary>
+    /// アルファ値の変更スピード
+    /// </summary>
     float alpha_speed = 3.0f;
+
+    /// <summary>
+    /// プレイヤー
+    /// </summary>
+    [HideInInspector] public GameObject target;
+
+    /// <summary>
+    /// メインカメラ
+    /// </summary>
+    Camera cam;
 
     // Start is called before the first frame update
     void Start()
@@ -44,17 +69,44 @@ public class Enemy : MonoBehaviour
         color_switch = false;
         animator = GetComponent<Animator>();
 
-        flashCtrl = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
+        //白目＆目玉取得
+        eye_back = GameObject.FindGameObjectWithTag("EnemyeyeBack");
+        eye = GameObject.FindGameObjectWithTag("Enemyeye");
 
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
-        eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
-        eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
+        Enemy_alphazero();
+
+        //メインカメラ取得
+        cam = Camera.main;
+
+        //ターゲット取得
+        target = GameObject.FindGameObjectWithTag("Player");
+
+        flashCtrl = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Enemy_alphaChange();
+        //プレイヤーが動けないとき
+       if(Player_test.move_check)
+        {
+            Enemy_alphaChange();
+            transform.position = new Vector3(target.transform.position.x, cam.transform.position.y, 0);
+        }
+       else
+        {
+            Enemy_alphaChange();
+        }
+    }
+
+    /// <summary>
+    /// アルファ値を0にする
+    /// </summary>
+    void Enemy_alphazero()
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
     /// <summary>
@@ -64,6 +116,7 @@ public class Enemy : MonoBehaviour
     {
         if (!flashCtrl.GetFlash())
         {
+            //光っていないとき
             if (enemy_alpha != 0.0f)
             {
                 enemy_alpha -= alpha_speed * Time.deltaTime;
@@ -74,6 +127,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            //光っているとき
             enemy_alpha = 1.0f;
             Enemy_aura();
             gameObject.GetComponent<SpriteRenderer>().color = new Color(red, 0.0f, 0.0f, enemy_alpha);
@@ -120,6 +174,9 @@ public class Enemy : MonoBehaviour
         Invoke(nameof(GameOver),2.0f);
     }
 
+    /// <summary>
+    /// ゲームオーバーシーンのフェード
+    /// </summary>
     void GameOver()
     {
         Fade_ctr.main_fade = true;
