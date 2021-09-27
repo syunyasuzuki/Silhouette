@@ -218,6 +218,14 @@ public class HideEditor : MonoBehaviour
         cpcgo.AddComponent<SpriteRenderer>().sprite= Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), PlatformPixelPerUnit);
         PolygonCollider2D pc2 = cpcgo.AddComponent<PolygonCollider2D>();
 
+        //頂点情報を割り出す
+
+
+
+
+
+
+
 
 
 
