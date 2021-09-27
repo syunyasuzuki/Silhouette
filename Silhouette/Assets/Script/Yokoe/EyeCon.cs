@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class EyeCon : MonoBehaviour
 {
-    [SerializeField] GameObject target;
+    /// <summary>
+    /// 敵胴体
+    /// </summary>
+    GameObject Enemybody;
 
     /// <summary>
     /// ターゲットの座標
     /// </summary>
-    private Vector3 target_pos;
+    public Vector3 target_pos;
 
     /// <summary>
     /// 追跡速度の減衰
@@ -26,29 +29,27 @@ public class EyeCon : MonoBehaviour
     /// </summary>
     private Vector3 start_pos;
 
-    /// <summary>
-    /// 敵胴体
-    /// </summary>
-    GameObject Enemybody;
-
-    Camera cam;
+    //敵胴体スクリプト
+    EnemyCon enemycon;
 
     // Start is called before the first frame update
     void Start()
     {
-        Enemybody = GameObject.Find("Enemybody");
+        //敵胴体取得
+        Enemybody = GameObject.FindGameObjectWithTag("Enemybody");
+
+        //スクリプト取得
+        enemycon = Enemybody.GetComponent<EnemyCon>();
 
         //初期位置を取得
         start_pos = Enemybody.transform.position;
-
-        cam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
         //ターゲットの座標を取得
-        target_pos = target.transform.position;
+        target_pos = enemycon.target.transform.position;
         Eye_move();
     }
 

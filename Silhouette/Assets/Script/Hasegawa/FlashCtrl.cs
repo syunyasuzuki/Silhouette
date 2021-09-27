@@ -92,6 +92,8 @@ public class FlashCtrl : MonoBehaviour
             nextflashtime = TitlelogoLifeTime;
             time = 0;
             titlechangetime = 0;
+            
+            Player_test.move_check = false;
         }
         titlechangetime += Time.deltaTime;
         if (nowgamemode == GameMode.Change)
