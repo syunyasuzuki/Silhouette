@@ -93,7 +93,7 @@ public class FlashCtrl : MonoBehaviour
             time = 0;
             titlechangetime = 0;
             
-            Player_test.move_check = false;
+            Player_test.move_check = true;
         }
         titlechangetime += Time.deltaTime;
         if (nowgamemode == GameMode.Change)
