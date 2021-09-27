@@ -48,11 +48,11 @@ public class Player_Came : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             came_check =! came_check;
+            Player_test.move_check=!came_check;
         }
         switch (came_check)
         {
-            case true:              
-                    Player_test.move_check = false;
+            case true:
                     Vector3 camepos = cameTransform.position;
                 RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
                 LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
@@ -82,8 +82,7 @@ public class Player_Came : MonoBehaviour
                 //}
                 cameTransform.position = camepos;             
                 break;
-        case false:
-                Player_test.move_check = true;              
+        case false:           
                 transform.position = new Vector3(playerTransform.position.x, transform.position.y, transform.position.z);
                 RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);

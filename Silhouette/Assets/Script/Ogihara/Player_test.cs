@@ -15,7 +15,7 @@ public class Player_test : MonoBehaviour
     float jump;
     Animator animator;
     bool now_jump;
-    public static bool move_check;//動けるかどうか
+    public static bool move_check { get; set; }//動けるかどうか
     FlashCtrl flashcon_player;
 
     // Start is called before the first frame update
@@ -92,7 +92,7 @@ public class Player_test : MonoBehaviour
         {
             PlayerCon();
         }
-        else
+        else if(move_check == false)
         {
             animator.SetFloat("JumpFloat", 0.0f);
             animator.SetFloat("WalkFloat", 0.0f);
