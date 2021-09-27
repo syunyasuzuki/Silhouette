@@ -4,36 +4,47 @@ using UnityEngine;
 
 public class Sample_H : MonoBehaviour
 {
+    //すり抜けテスト
 
-    FlashCtrl flashctrl = null;
+    [SerializeField] GameObject obj = null;
 
-    [SerializeField] SpriteRenderer bg = null;
+    [SerializeField] int N = 20;
 
-    [SerializeField] Color32 DefaultColor = new Color32(0, 104, 183, 255);
+    [SerializeField] float ResetTime = 5f;
 
-    private Color32 Black = new Color32(0, 0, 0, 255);
+    private GameObject[] objs = null;
+
+    private float time = 0;
+
+    private void ResetObjs()
+    {
+        for(int i = 0; i < N; ++i)
+        {
+            objs[i].transform.position = new Vector3(Random.Range(-7f, 7f), 10, 0);
+            objs[i].GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        flashctrl = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
-        bg.color = Black;
+        objs = new GameObject[N];
+
+        for(int i = 0; i < N; ++i)
+        {
+            objs[i] = Instantiate(obj);
+        }
+        ResetObjs();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (flashctrl.GetFlash())
+        time += Time.deltaTime;
+        if (time >= ResetTime)
         {
-            bg.color = DefaultColor;
+            ResetObjs();
+            time = 0;
         }
-        else
-        {
-            bg.color = Black;
-        }
-
-
-
-
     }
 }
