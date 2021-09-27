@@ -992,7 +992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   came: {fileID: 1736891697}
   came_move_max: 15
-  came_move_min: -10
+  came_move_min: -15
   RightArrow: {fileID: 1866154951}
   LeftArrow: {fileID: 1392819898}
   CameImage: {fileID: 247449275}

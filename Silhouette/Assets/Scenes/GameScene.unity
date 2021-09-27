@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 53262762}
   - component: {fileID: 53262761}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: LeftArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,9 +1064,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7dbd24f67ac8b438a25874a4a34722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  came: {fileID: 0}
-  came_move_max: 10
-  came_move_min: -10
+  came: {fileID: 920437187}
+  came_move_max: 15
+  came_move_min: -15
   RightArrow: {fileID: 2106176058}
   LeftArrow: {fileID: 53262761}
   CameImage: {fileID: 1755737085}
@@ -1728,7 +1728,7 @@ GameObject:
   - component: {fileID: 1755737086}
   - component: {fileID: 1755737085}
   m_Layer: 5
-  m_Name: Image
+  m_Name: camemode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2444,7 +2444,7 @@ GameObject:
   - component: {fileID: 2106176059}
   - component: {fileID: 2106176058}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: RightArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

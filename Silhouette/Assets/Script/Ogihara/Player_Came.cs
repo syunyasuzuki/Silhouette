@@ -12,14 +12,11 @@ public class Player_Came : MonoBehaviour
     Vector3 camepos;
     Vector3 playerpos;
     public static bool came_check;
-    [SerializeField] Camera came;
     [SerializeField] float came_move_max = 10;
     [SerializeField] float came_move_min = -10;
     [SerializeField] Image RightArrow;
     [SerializeField] Image LeftArrow;
-    [SerializeField] Image CameImage;
-    
-
+    [SerializeField] Image CameImage;  
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +24,6 @@ public class Player_Came : MonoBehaviour
         playerObj = GameObject.FindGameObjectWithTag("Player");                
         playerTransform = playerObj.transform;
         cameTransform = gameObject.GetComponent<Transform>();
-        came =gameObject.GetComponent<Camera>();
         came_check = false;
         RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
         LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
@@ -77,21 +73,14 @@ public class Player_Came : MonoBehaviour
                 }
                 //float camedistance = Vector2.Distance(playerpos, camepos);
                 //if (camedistance >= came_move_max || camedistance == came_move_max)
-                //{
-                //    camepos = cameTransform.position;
-                //   RightArrow .GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                //{                    
+                //    RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 //}
-                //else if(camedistance <= came_move_min || camedistance == came_move_min)
-                //{
-                //    camepos = cameTransform.position;
+                //else if (camedistance <= came_move_min || camedistance == came_move_min)
+                //{                   
                 //    LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 //}
-                cameTransform.position = camepos;
-                //if (Input.GetKeyDown(KeyCode.Z))
-                //{                    
-                //    Player_test.move_check = false;
-                //    came_check = false;
-                //}
+                cameTransform.position = camepos;             
                 break;
         case false:
                 Player_test.move_check = true;              
@@ -99,7 +88,6 @@ public class Player_Came : MonoBehaviour
                 RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 CameImage.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-
                 break;
         }
     }

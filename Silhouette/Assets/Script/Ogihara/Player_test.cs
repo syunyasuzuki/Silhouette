@@ -25,7 +25,7 @@ public class Player_test : MonoBehaviour
         animator = GetComponent<Animator>();
         box2D = GetComponent<BoxCollider2D>();
         now_jump = false;
-        move_check = true;
+        move_check = false;
         rig2D.isKinematic = false;
         flashcon_player = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
     }
@@ -82,6 +82,7 @@ public class Player_test : MonoBehaviour
         {
             animator.SetFloat("WalkFloat", 0.0f);
         }
+        
     }
 
     // Update is called once per frame
