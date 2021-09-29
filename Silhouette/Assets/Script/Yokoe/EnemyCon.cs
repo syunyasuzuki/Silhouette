@@ -54,7 +54,7 @@ public class EnemyCon : MonoBehaviour
     float alpha_speed = 3.0f;
 
     /// <summary>
-    /// プレイヤー
+    /// ターゲット
     /// </summary>
     [HideInInspector] public GameObject target;
 
