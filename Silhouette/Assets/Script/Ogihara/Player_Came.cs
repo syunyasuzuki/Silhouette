@@ -38,8 +38,15 @@ public class Player_Came : MonoBehaviour
 
     // Update is called once per frame
     void LateUpdate()
-    {       
-        Move_Camera();
+    {
+        if (Player_test.game_check == true)
+        {
+            Move_Camera();
+        }
+        else
+        {
+
+        }
     }        
 
     void Move_Camera()
@@ -47,8 +54,7 @@ public class Player_Came : MonoBehaviour
         //カメラ移動ON/OFF
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            came_check =! came_check;
-            Player_test.move_check=!came_check;
+            came_check =! came_check;           
         }
         switch (came_check)
         {
