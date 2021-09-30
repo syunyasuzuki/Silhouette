@@ -26,7 +26,7 @@ public class DummyCtrl : MonoBehaviour
         public void Create(GameObject d, float min, float max)
         {
             dummy = Instantiate(d);
-            dummy.transform.localScale = new Vector3(Random.Range(1.5f, 3.5f), Random.Range(3f, 5f), 1);
+            dummy.transform.localScale = new Vector3(Random.Range(1f, 1.5f), Random.Range(1f, 1.5f), 1);
             dummy.transform.position = new Vector3(Random.Range(min, max), -4 + dummy.transform.localScale.y / 2f, 0);
             sr = dummy.GetComponent<SpriteRenderer>();
         }
@@ -55,7 +55,7 @@ public class DummyCtrl : MonoBehaviour
         public void Color_Default()
         {
             //sr.color = new Color(1f / 255 * 199, 1f / 255 * 21, 1f / 255 * 133, 1);
-            sr.color = new Color32(0, 10, 40, 255);
+            sr.color = new Color32(255, 255, 255, 255);
         }
     }
 
