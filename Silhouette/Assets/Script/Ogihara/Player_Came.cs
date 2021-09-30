@@ -59,7 +59,9 @@ public class Player_Came : MonoBehaviour
         switch (came_check)
         {
             case true:
-                    Vector3 camepos = cameTransform.position;
+                Player_test.move_check = false;
+                Vector3 camepos = cameTransform.position;
+                playerpos = GameObject.Find("Player").transform.position;
                 RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
                 LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
                 CameImage.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
@@ -77,18 +79,21 @@ public class Player_Came : MonoBehaviour
                     camepos.x = 0.0f;
                     LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 }
-                //float camedistance = Vector2.Distance(playerpos, camepos);
-                //if (camedistance >= came_move_max || camedistance == came_move_max)
-                //{                    
-                //    RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                //}
-                //else if (camedistance <= came_move_min || camedistance == came_move_min)
-                //{                   
-                //    LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                //}
+                float camedistance = Vector2.Distance(playerpos, camepos);
+                if (camedistance >= came_move_max || camedistance == came_move_max)
+                {
+                    RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    camepos = cameTransform.position;
+                }
+                else if (camedistance <= came_move_min || camedistance == came_move_min)
+                {
+                    LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+                    camepos = cameTransform.position;
+                }
                 cameTransform.position = camepos;             
                 break;
-        case false:           
+        case false:
+                Player_test.move_check = true;
                 transform.position = new Vector3(playerTransform.position.x, transform.position.y, transform.position.z);
                 RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
