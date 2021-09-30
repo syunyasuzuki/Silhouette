@@ -32,17 +32,21 @@ public class EyeCon : MonoBehaviour
     //敵胴体スクリプト
     EnemyCon enemycon;
 
+    Vector3 enemy_pos;
+
     // Start is called before the first frame update
     void Start()
     {
         //敵胴体取得
         Enemybody = GameObject.FindGameObjectWithTag("Enemybody");
 
+        enemy_pos = Enemybody.transform.position;
+
         //スクリプト取得
         enemycon = Enemybody.GetComponent<EnemyCon>();
 
         //初期位置を取得
-        start_pos = Enemybody.transform.position;
+        start_pos = enemy_pos;
     }
 
     // Update is called once per frame
@@ -59,7 +63,7 @@ public class EyeCon : MonoBehaviour
     void Eye_move()
     {
         //ベクトル
-        Vector3 direction = (target_pos - Enemybody.transform.position);
+        Vector3 direction = (target_pos - enemy_pos);
 
         //円の範囲内にプレイヤーがいるとき
         if (direction.magnitude < radius) 
@@ -69,7 +73,7 @@ public class EyeCon : MonoBehaviour
         else
         {
             direction = direction.normalized;
-            transform.position = new Vector2(Enemybody.transform.position.x + radius * direction.x, radius * direction.y); 
+            transform.position = new Vector2(enemy_pos.x + radius * direction.x, enemy_pos.y+radius * direction.y); 
         }
     }
 }
