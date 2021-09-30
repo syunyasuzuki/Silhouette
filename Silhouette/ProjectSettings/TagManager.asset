@@ -7,6 +7,9 @@ TagManager:
   - Wall
   - Block
   - Goal
+  - Enemybody
+  - EnemyeyeBack
+  - Enemyeye
   layers:
   - Default
   - TransparentFX

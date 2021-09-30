@@ -88,10 +88,10 @@ public class EnemyCon : MonoBehaviour
     void Update()
     {
         //プレイヤーが動けないとき
-       if(Player_test.move_check)
+       if(Player_test.game_check||Player_test.move_check)
         {
             Enemy_alphaChange();
-            transform.position = new Vector3(target.transform.position.x, cam.transform.position.y, 0);
+            transform.position = new Vector3(target.transform.position.x, cam.transform.position.y + 3.0f, 0);
         }
        else
         {
@@ -123,7 +123,7 @@ public class EnemyCon : MonoBehaviour
             }
             gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
             eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
-            eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
+            eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         }
         else
         {
