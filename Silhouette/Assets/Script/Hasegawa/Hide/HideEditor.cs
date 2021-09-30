@@ -197,16 +197,25 @@ public class HideEditor : MonoBehaviour
         }
     }
 
-
     //書き出し時に使うPNGの名前
     [SerializeField] InputField PNGFileName = null;
-
+    private enum BasisPoint
+    {
+        Basis = 0,
+        LeftDown = 1,
+        RightDown = 2,
+        RightUp = 3
+    }
+    private Vector2Int Basis = Vector2Int.zero;
+    private Vector2Int LeftDown = new Vector2Int(0, 1);
+    private Vector2Int RightDown = new Vector2Int(1, 1);
+    private Vector2Int RightUp = new Vector2Int(1, 0);
     //書き出したPNGを使用してオブジェクトを作成し、
     //タイルデータから頂点データを作成し、
     //オブジェクトのスプライトに沿ったポリゴンコライダーを生成する
     private void CreatePolygonCollider()
     {
-        GameObject cpcgo = new GameObject(PNGFileName + "_p_obj");
+        GameObject cpcgo = new GameObject(PNGFileName.text);
         FileStream fs = new FileStream(Path.Combine(SpriteFolderPath, PNGFileName.text + "_platform.png"), FileMode.Open);
         BinaryReader br = new BinaryReader(fs);
         byte[] tx = br.ReadBytes((int)br.BaseStream.Length);
@@ -218,20 +227,203 @@ public class HideEditor : MonoBehaviour
         cpcgo.AddComponent<SpriteRenderer>().sprite= Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), PlatformPixelPerUnit);
         PolygonCollider2D pc2 = cpcgo.AddComponent<PolygonCollider2D>();
 
-        //頂点情報を割り出す
+        //--頂点情報を割り出す--
+        //探索済みのところを記録するやつ
+        int[,] SarchedTileData = new int[HideSize.y, HideSize.x];
+
+
+        //指定された位置の情報を返す
+        //もし範囲外の場合0を返す
+        //また探索済みとして記録する
+        int SarchArray(Vector2Int pos)
+        {
+            if (pos.x < 0 || pos.x >= HideSize.x || pos.y < 0 || pos.y >= HideSize.y)
+            {
+                return 0;
+            }
+            else
+            {
+                SarchedTileData[pos.y, pos.x] = PlatformTileData[pos.y][pos.x] + 1;
+                return PlatformTileData[pos.y][pos.x];
+            }
+        }
+
+
+        //頂点情報を入れたリスト
+        List<List<Vector2>> vc2listlist = new List<List<Vector2>>();
+
+        for (int y = 0; y < HideSize.y; ++y)
+        {
+            for (int x = 0; x < HideSize.x; ++x)
+            {
+                if (SarchedTileData[y, x] == 0)
+                {
+                    SarchedTileData[y, x] = PlatformTileData[y][x] + 1;
+
+                    if (SarchedTileData[y, x] == 2)
+                    {
+                        if (SarchArray(new Vector2Int(x - 1, y - 1)) == 1 && SarchArray(new Vector2Int(x, y - 1)) == 1 && SarchArray(new Vector2Int(x - 1, y)) == 1) { break; }
+                        List<Vector2> vc2list = new List<Vector2>();
+
+                        vc2list.Add(new Vector2(-HideSize.x / 2f + x, -HideSize.y / 2f + y));
+                        Vector2Int position = new Vector2Int(x, y);
+                        Vector2Int vector = Basis;
+                        BasisPoint nowbasis = BasisPoint.Basis;
+                        while (true)
+                        {
+                            switch (nowbasis)
+                            {
+                                case BasisPoint.Basis:
+                                    if (SarchArray(position + new Vector2Int(-1, -1)) == 1)
+                                    {
+                                        if (SarchArray(position + new Vector2Int(0, -1)) == 1)
+                                        {
+                                            //水色
+                                            position += new Vector2Int(-1, -1);
+                                            nowbasis = BasisPoint.LeftDown;
+                                            vector = LeftDown;
+                                        }
+                                        else
+                                        {
+                                            //オレンジ
+                                            position += new Vector2Int(-1, -1);
+                                            nowbasis = BasisPoint.RightUp;
+                                            vector = RightUp;
+                                        }
+                                    }
+                                    else if (SarchArray(position + new Vector2Int(-1, 0)) == 1)
+                                    {
+                                        //緑
+                                        position += new Vector2Int(-1, 0);
+                                        nowbasis = BasisPoint.Basis;
+                                        vector = Basis;
+                                    }
+                                    else
+                                    {
+                                        //青
+                                        nowbasis = BasisPoint.LeftDown;
+                                        vector = LeftDown;
+                                    }
+                                    break;
+                                case BasisPoint.LeftDown:
+                                    if (SarchArray(position + new Vector2Int(-1, 1)) == 1)
+                                    {
+                                        if (SarchArray(position + new Vector2Int(-1, 0)) == 1)
+                                        {
+                                            //水色
+                                            position += new Vector2Int(-1, 1);
+                                            nowbasis = BasisPoint.RightDown;
+                                            vector = RightDown;
+                                        }
+                                        else
+                                        {
+                                            //オレンジ
+                                            position += new Vector2Int(-1, 1);
+                                            nowbasis = BasisPoint.Basis;
+                                            vector = Basis;
+                                        }
+                                    }
+                                    else if (SarchArray(position + new Vector2Int(0, 1)) == 1)
+                                    {
+                                        //緑
+                                        position += new Vector2Int(0, 1);
+                                        nowbasis = BasisPoint.LeftDown;
+                                        vector = LeftDown;
+                                    }
+                                    else
+                                    {
+                                        //青
+                                        nowbasis = BasisPoint.RightDown;
+                                        vector = RightDown;
+                                    }
+                                    break;
+                                case BasisPoint.RightDown:
+                                    if (SarchArray(position + new Vector2Int(1, 1)) == 1)
+                                    {
+                                        if (SarchArray(position + new Vector2Int(0, 1)) == 1)
+                                        {
+                                            //水色
+                                            position += new Vector2Int(1, 1);
+                                            nowbasis = BasisPoint.RightUp;
+                                            vector = RightUp;
+                                        }
+                                        else
+                                        {
+                                            //オレンジ
+                                            position += new Vector2Int(1, 1);
+                                            nowbasis = BasisPoint.LeftDown;
+                                            vector = LeftDown;
+                                        }
+                                    }
+                                    else if (SarchArray(position + new Vector2Int(1, 0)) == 1)
+                                    {
+                                        //緑
+                                        position += new Vector2Int(1, 0);
+                                        nowbasis = BasisPoint.RightDown;
+                                        vector = RightDown;
+                                    }
+                                    else
+                                    {
+                                        //青
+                                        nowbasis = BasisPoint.RightUp;
+                                        vector = RightUp;
+                                    }
+                                    break;
+                                case BasisPoint.RightUp:
+                                    if (SarchArray(position + new Vector2Int(1, -1)) == 1)
+                                    {
+                                        if (SarchArray(position + new Vector2Int(1, 0)) == 1)
+                                        {
+                                            //水色
+                                            position += new Vector2Int(1, -1);
+                                            nowbasis = BasisPoint.Basis;
+                                            vector = Basis;
+                                        }
+                                        else
+                                        {
+                                            //オレンジ
+                                            position += new Vector2Int(1, -1);
+                                            nowbasis = BasisPoint.RightDown;
+                                            vector = RightDown;
+                                        }
+                                    }
+                                    else if (SarchArray(position + new Vector2Int(0, -1)) == 1)
+                                    {
+                                        //緑
+                                        position += new Vector2Int(0, -1);
+                                        nowbasis = BasisPoint.RightUp;
+                                        vector = RightUp;
+                                    }
+                                    else
+                                    {
+                                        //青
+                                        nowbasis = BasisPoint.Basis;
+                                        vector = Basis;
+                                    }
+                                    break;
+                            }
+                            vc2list.Add(new Vector2(-HideSize.x / 2f + position.x + vector.x, -HideSize.y / 2f + position.y + vector.y));
+
+                            if (vc2list.Count > 3 && vc2list[0] == vc2list[vc2list.Count - 1])
+                            {
+                                vc2list.RemoveAt(vc2list.Count - 1);
+                                vc2listlist.Add(vc2list);
+                                break;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
 
 
 
-
-
-
-
-
-
-
-
-
-
+        pc2.pathCount = vc2listlist.Count;
+        for (int i = 0; i < vc2listlist.Count; ++i)
+        {
+            pc2.SetPath(i, vc2listlist[i]);
+        }
 
     }
 
@@ -522,8 +714,8 @@ public class HideEditor : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                ExportPlatformPng();
-                ExportBackPng();
+               ExportPlatformPng();
+               //ExportBackPng();
             }
 
             if (Input.GetKeyDown(KeyCode.Backspace))
@@ -539,6 +731,11 @@ public class HideEditor : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.C))
             {
                 OverwritePlatformToBack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                CreatePolygonCollider();
             }
         }
     }
