@@ -63,11 +63,16 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     Camera cam;
 
+    bool gameover_switch;
+
+    float gameover_scale = 5.0f;
+
     // Start is called before the first frame update
     void Start()
     {
         color_switch = false;
         animator = GetComponent<Animator>();
+        gameover_switch=false;
 
         //白目＆目玉取得
         eye_back = GameObject.FindGameObjectWithTag("EnemyeyeBack");
@@ -87,15 +92,28 @@ public class EnemyCon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //プレイヤーが動けないとき
+        //プレイヤーが動けるとき
        if(Player_test.game_check||Player_test.move_check)
         {
-            Enemy_alphaChange();
+            Enemy_move();
+        }
+        Enemy_alphaChange();
+    }
+
+    /// <summary>
+    /// 移動
+    /// </summary>
+    void Enemy_move()
+    {
+        //ゲームオーバーではないとき
+        if (!gameover_switch)
+        {
             transform.position = new Vector3(target.transform.position.x, cam.transform.position.y + 3.0f, 0);
         }
-       else
+        else
         {
-            Enemy_alphaChange();
+            transform.localScale = new Vector3(gameover_scale, gameover_scale, 0);
+            transform.position = new Vector3(transform.position.x, cam.transform.position.y - 1.0f, 0);
         }
     }
 
@@ -171,7 +189,7 @@ public class EnemyCon : MonoBehaviour
             animator.SetFloat("EatFloat", 0.5f);
         }
 
-        Invoke(nameof(GameOver),2.0f);
+        Invoke(nameof(GameOver),3.0f);
     }
 
     /// <summary>
@@ -179,6 +197,7 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     void GameOver()
     {
+        gameover_switch = true;
         Fade_ctr.main_fade = true;
         Fade_ctr.main_fade_out = true;
     }
