@@ -32,7 +32,33 @@ public class Player_test : MonoBehaviour
         game_check = false;
     }
 
-    void PlayerCon()
+    // Update is called once per frame
+    void Update()
+    {
+        if (game_check == true)
+        {
+            if (move_check == true)
+            {
+                PlayerCon();
+            }
+            else if (move_check == false)
+            {
+                animator.SetFloat("JumpFloat", 0.0f);
+                animator.SetFloat("WalkFloat", 0.0f);
+            }
+
+            if (flashcon_player.GetFlash() == true && DeadPoint_ctr.found_check == false)
+            {
+                rig2D.isKinematic = true;
+                rig2D.velocity = Vector2.zero;
+            }
+        }
+        else
+        {
+
+        }
+
+        void PlayerCon()
     {
         //移動処理
         float x = Input.GetAxisRaw("Horizontal");
@@ -86,33 +112,8 @@ public class Player_test : MonoBehaviour
         }
         
     }
+ }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (game_check == true)
-        {
-            if (move_check == true)
-            {
-                PlayerCon();
-            }
-            else if (move_check == false)
-            {
-                animator.SetFloat("JumpFloat", 0.0f);
-                animator.SetFloat("WalkFloat", 0.0f);
-            }
-
-            if (flashcon_player.GetFlash() == true && DeadPoint_ctr.found_check == false)
-            {
-                rig2D.isKinematic = true;
-                rig2D.velocity = Vector2.zero;
-            }
-        }
-        else
-        {
-
-        }
-    }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == ("Goal"))
