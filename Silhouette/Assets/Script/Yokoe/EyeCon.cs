@@ -12,7 +12,7 @@ public class EyeCon : MonoBehaviour
     /// <summary>
     /// ターゲットの座標
     /// </summary>
-    public Vector3 target_pos;
+    private Vector3 target_pos;
 
     /// <summary>
     /// 追跡速度の減衰
@@ -24,11 +24,6 @@ public class EyeCon : MonoBehaviour
     /// </summary>
     float radius = 1.0f;
 
-    /// <summary>
-    /// 目玉初期位置
-    /// </summary>
-    private Vector3 start_pos;
-
     //敵胴体スクリプト
     EnemyCon enemycon;
 
@@ -37,23 +32,20 @@ public class EyeCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //敵胴体取得
+        //敵胴体&座標取得
         Enemybody = GameObject.FindGameObjectWithTag("Enemybody");
-
-        enemy_pos = Enemybody.transform.position;
 
         //スクリプト取得
         enemycon = Enemybody.GetComponent<EnemyCon>();
-
-        //初期位置を取得
-        start_pos = enemy_pos;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ターゲットの座標を取得
+        //敵の胴体とターゲットの座標を取得
+        enemy_pos = Enemybody.transform.position;
         target_pos = enemycon.target.transform.position;
+
         Eye_move();
     }
 
@@ -66,14 +58,14 @@ public class EyeCon : MonoBehaviour
         Vector3 direction = (target_pos - enemy_pos);
 
         //円の範囲内にプレイヤーがいるとき
-        if (direction.magnitude < radius) 
+        if (direction.magnitude < radius)
         {
             transform.position = target_pos;
         }
         else
         {
             direction = direction.normalized;
-            transform.position = new Vector2(enemy_pos.x + radius * direction.x, enemy_pos.y+radius * direction.y); 
+            transform.position = new Vector2(enemy_pos.x + radius * direction.x, enemy_pos.y + radius * direction.y);
         }
     }
 }
