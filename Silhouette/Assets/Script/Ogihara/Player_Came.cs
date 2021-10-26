@@ -29,9 +29,8 @@ public class Player_Came : MonoBehaviour
         LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
         CameImage.GetComponent<Image>().color = new Color(1, 1, 1, 0);
         playerpos = GameObject.Find("Player").transform.position;
-        GetComponent<Player_Came>().enabled = true;
+        GetComponent<Player_Came>().enabled = true;       
     }
-
     void Update()
     {
        
@@ -42,8 +41,7 @@ public class Player_Came : MonoBehaviour
     {
         if (Player_test.game_check == true)
         {
-            Move_Camera();
-            Chase_Camera();
+            Move_Camera();           
         }
         else
         {
@@ -56,49 +54,41 @@ public class Player_Came : MonoBehaviour
         //カメラ移動ON/OFF
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            came_check =! came_check;
-           
+            came_check =! came_check;           
         }
         switch (came_check)
         {
             case true:
                 Player_test.move_check = false;
-                Vector3 camepos = cameTransform.position;
+                Vector3 camepos = cameTransform.position;                
                 playerpos = GameObject.Find("Player").transform.position;
                 RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
                 LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
                 CameImage.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
-
                 if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
                 {
                     camepos.x += 0.1f;                   
                 }
                 if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
                     {
-                        camepos.x += -0.1f;                
+                        camepos.x += -0.1f;                    
                     }
                 if(camepos.x < 0 || camepos.x == 0)
                 {
                     camepos.x = 0.0f;
                     LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 }
-                float camedistance = Vector2.Distance(camepos, playerpos);
-                if (camedistance >= came_move_max)
+                float dictance = playerpos.x - camepos.x;
+                if (dictance >= came_move_max)
                 {
-                    camepos = cameTransform.position;
-                   if(playerpos.x <= camepos.x)
-                    {
-                        RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                    }
-                }
-              else  if (camedistance <=　came_move_min)
-                {                   
                     camepos = cameTransform.position;                  
-                    if(camepos.x <= playerpos.x)
-                    {
-                        LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-                    }
+                    LeftArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);                    
                 }
+              else  if (dictance <=　came_move_min)
+              {                   
+                    camepos = cameTransform.position;                                    
+                    RightArrow.GetComponent<Image>().color = new Color(1, 1, 1, 0);                    
+              }
                 cameTransform.position = camepos;             
                 break;
         case false:
@@ -109,10 +99,6 @@ public class Player_Came : MonoBehaviour
                 CameImage.GetComponent<Image>().color = new Color(1, 1, 1, 0);
                 break;
         }  
-    }
-    void Chase_Camera()
-    {
-
-    }
+    }   
 }
 
