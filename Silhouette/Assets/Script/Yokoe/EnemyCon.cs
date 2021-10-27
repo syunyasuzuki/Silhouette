@@ -63,16 +63,29 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     Camera cam;
 
+    /// <summary>
+    /// ゲームオーバー時
+    /// </summary>
     bool gameover_switch;
 
+    /// <summary>
+    /// ゲームオーバーの時の敵の大きさ
+    /// </summary>
     float gameover_scale = 5.0f;
+
+    /// <summary>
+    /// カメラを揺らすScript
+    /// </summary>
+    CameraShake cam_shake; 
 
     // Start is called before the first frame update
     void Start()
     {
         color_switch = false;
-        animator = GetComponent<Animator>();
         gameover_switch=false;
+
+        //アニメーター取得
+        animator = GetComponent<Animator>();
 
         //白目＆目玉取得
         eye_back = GameObject.FindGameObjectWithTag("EnemyeyeBack");
@@ -83,9 +96,13 @@ public class EnemyCon : MonoBehaviour
         //メインカメラ取得
         cam = Camera.main;
 
+        //カメラを揺らすScript取得
+        cam_shake = cam.GetComponent<CameraShake>();
+
         //ターゲット取得
         target = GameObject.FindGameObjectWithTag("Player");
 
+        //光るタイミングの判定を取得
         flashCtrl = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
     }
 
@@ -93,11 +110,15 @@ public class EnemyCon : MonoBehaviour
     void Update()
     {
         //プレイヤーが動けるとき
-       if(Player_test.game_check||Player_test.move_check)
+       if(Player_test.game_check)
         {
             Enemy_move();
+            Enemy_alphaChange();
         }
-        Enemy_alphaChange();
+        else
+        {
+            Enemy_alphazero();
+        }
     }
 
     /// <summary>
@@ -112,8 +133,8 @@ public class EnemyCon : MonoBehaviour
         }
         else
         {
+            gameObject.GetComponent<SpriteRenderer>().sortingOrder = 9;
             transform.localScale = new Vector3(gameover_scale, gameover_scale, 0);
-            transform.position = new Vector3(transform.position.x, cam.transform.position.y - 1.0f, 0);
         }
     }
 
@@ -189,7 +210,9 @@ public class EnemyCon : MonoBehaviour
             animator.SetFloat("EatFloat", 0.5f);
         }
 
-        Invoke(nameof(GameOver),3.0f);
+        cam_shake.gameover_switch = true;
+        gameover_switch = true;
+        Invoke(nameof(GameOver),5.0f);
     }
 
     /// <summary>
@@ -197,7 +220,6 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     void GameOver()
     {
-        gameover_switch = true;
         Fade_ctr.main_fade = true;
         Fade_ctr.main_fade_out = true;
     }
