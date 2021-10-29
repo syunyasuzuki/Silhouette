@@ -9,16 +9,25 @@ public class CameraShake : MonoBehaviour
     /// </summary>
     float elapsed;
 
+    /// <summary>
+    /// 揺れの起動スイッチ
+    /// </summary>
     bool shake_switch;
 
-    Vector3 pos;
+    /// <summary>
+    /// 揺れる前のカメラのポジション
+    /// </summary>
+    Vector3 cam_startpos;
 
-    public bool gameover_switch;
+    /// <summary>
+    /// ゲームオーバ時の揺れの起動スイッチ
+    /// </summary>
+    [HideInInspector]public bool gameovershake_switch;
 
     void Start()
     {
         shake_switch = false;
-        gameover_switch = false;
+        gameovershake_switch = false;
     }
 
     void Update()
@@ -28,9 +37,9 @@ public class CameraShake : MonoBehaviour
             if (!shake_switch)
             {
                 shake_switch = true;
-                pos = transform.position;
+                cam_startpos = transform.position;
             }
-            elapsed = 1.0f;
+            //elapsed = 1.0f;
         }
 
         if(shake_switch)
@@ -38,9 +47,10 @@ public class CameraShake : MonoBehaviour
             Shake(1.0f,1.0f);
         }
 
-        if(gameover_switch)
+        if(gameovershake_switch)
         {
-            Shake(1.0f, 0.5f);
+            cam_startpos = transform.position;
+            Shake(0.5f, 0.5f);
         }
     }
 
@@ -49,23 +59,26 @@ public class CameraShake : MonoBehaviour
     /// </summary>
     /// <param name="duration">揺れる時間</param>
     /// <param name="magnitude">揺らす強さ</param>
-    public void Shake(float duration,float magnitude)
+    void Shake(float duration,float magnitude)
     {
-        elapsed = duration;
+        if(elapsed<=0.0f)
+        {
+            elapsed = duration;
+        }
+        
         elapsed -= Time.deltaTime;
 
         //正規化
         float n = 1f / duration * elapsed;
-        float x = pos.x + Random.Range(-n, n) * magnitude;
-        float y = pos.y + Random.Range(-n, n) * magnitude;
+        float x = cam_startpos.x + Random.Range(-n, n) * magnitude;
+        float y = cam_startpos.y + Random.Range(-n, n) * magnitude;
 
-        transform.localPosition = new Vector3(x, y, pos.z);
+        transform.localPosition = new Vector3(x, y, cam_startpos.z);
 
 
         if (elapsed <= 0f) {
             shake_switch = false;
-            transform.localPosition = pos;
+            transform.localPosition = cam_startpos;
         }
-
     }
 }

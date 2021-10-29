@@ -135,6 +135,7 @@ public class EnemyCon : MonoBehaviour
         {
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = 9;
             transform.localScale = new Vector3(gameover_scale, gameover_scale, 0);
+            transform.position = new Vector3(target.transform.position.x, 0, transform.position.z);
         }
     }
 
@@ -210,9 +211,7 @@ public class EnemyCon : MonoBehaviour
             animator.SetFloat("EatFloat", 0.5f);
         }
 
-        cam_shake.gameover_switch = true;
-        gameover_switch = true;
-        Invoke(nameof(GameOver),5.0f);
+        Invoke(nameof(GameOver),2.5f);
     }
 
     /// <summary>
@@ -220,6 +219,8 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     void GameOver()
     {
+        cam_shake.gameovershake_switch = true;
+        gameover_switch = true;
         Fade_ctr.main_fade = true;
         Fade_ctr.main_fade_out = true;
     }
