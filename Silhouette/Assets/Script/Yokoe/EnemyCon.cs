@@ -122,14 +122,17 @@ public class EnemyCon : MonoBehaviour
     }
 
     /// <summary>
-    /// 移動
+    /// プレイヤー追従
     /// </summary>
     void Enemy_move()
     {
         //ゲームオーバーではないとき
         if (!gameover_switch)
         {
-            transform.position = new Vector3(target.transform.position.x, cam.transform.position.y + 3.0f, 0);
+            if (enemy_alpha <= 0.0f)
+            {
+                transform.position = new Vector3(target.transform.position.x, cam.transform.position.y + 3.0f, 0);
+            }
         }
         else
         {
@@ -144,7 +147,8 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     void Enemy_alphazero()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+        enemy_alpha = 0.0f;                                                                                                                                                             
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
         eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
     }
