@@ -11,6 +11,7 @@ public class DeadPoint_ctr : MonoBehaviour
     FlashCtrl flashcon;
     public static bool exc_mark_check;
     EnemyCon enemycon;
+    public GameObject Came;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +34,7 @@ public class DeadPoint_ctr : MonoBehaviour
             Player_test.move_check = false;
             exc_mark_check = true;
             enemycon.Enemy_Eat();
+            Came.GetComponent<Player_Came>().enabled = false;
         }       
     }
 
