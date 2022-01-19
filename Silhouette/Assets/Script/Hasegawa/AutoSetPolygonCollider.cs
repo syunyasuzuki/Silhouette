@@ -22,6 +22,7 @@ public class AutoSetPolygonCollider : MonoBehaviour
     //自身のゲームオブジェクトの名前をキャッシュする
     string ObjectName = "";
 
+#if UNITY_EDITOR
     private void Start()
     {
 
@@ -29,6 +30,7 @@ public class AutoSetPolygonCollider : MonoBehaviour
         DetectionEditorChange.ExitPlaying += PolygonSet;
 
     }
+#endif
 
     //頂点情報
     private struct PointData

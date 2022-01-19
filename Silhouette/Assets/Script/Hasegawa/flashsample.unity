@@ -374,7 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af7dbd24f67ac8b438a25874a4a34722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  came: {fileID: 0}
   came_move_max: 10
   came_move_min: -10
   RightArrow: {fileID: 2106176058}
@@ -892,6 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fade_image: {fileID: 1940978787}
+  clear_image: {fileID: 0}
 --- !u!4 &1858149083
 Transform:
   m_ObjectHideFlags: 0
@@ -906,34 +906,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1898531218 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8329254728571398695, guid: 9c6d7930241bbfd44b462945b2fbb531,
-    type: 3}
-  m_PrefabInstance: {fileID: 8329254729722412577}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1898531219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1898531218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09d71414154c9ab42b10b8b8a1b1938b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bg: {fileID: 1898531220}
-  DefaultColor:
-    serializedVersion: 2
-    rgba: 4288497958
---- !u!212 &1898531220 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 8329254728571398694, guid: 9c6d7930241bbfd44b462945b2fbb531,
-    type: 3}
-  m_PrefabInstance: {fileID: 8329254729722412577}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1940978785
 GameObject:
   m_ObjectHideFlags: 0

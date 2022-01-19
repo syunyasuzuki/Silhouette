@@ -19,8 +19,6 @@ namespace DigitalRuby.RainMaker
         private float initialEmissionRain;
         private Vector2 initialStartSpeedRain;
         private Vector2 initialStartSizeRain;
-        private Vector2 initialStartSpeedMist;
-        private Vector2 initialStartSizeMist;
         private Vector2 initialStartSpeedExplosion;
         private Vector2 initialStartSizeExplosion;
         private readonly ParticleSystem.Particle[] particles = new ParticleSystem.Particle[2048];
@@ -145,7 +143,8 @@ namespace DigitalRuby.RainMaker
 
             initialEmissionRain = RainFallParticleSystem.emission.rateOverTime.constant;
             initialStartSpeedRain = new Vector2(RainFallParticleSystem.main.startSpeed.constantMin, RainFallParticleSystem.main.startSpeed.constantMax);
-            initialStartSizeRain = new Vector2(RainFallParticleSystem.main.startSize.constantMin, RainFallParticleSystem.main.startSize.constantMax);
+            //initialStartSizeRain = new Vector2(RainFallParticleSystem.main.startSize.constantMin, RainFallParticleSystem.main.startSize.constantMax);
+            initialStartSizeRain = new Vector2(0.02f, RainFallParticleSystem.main.startSize.constantMax);
 
             if (RainExplosionParticleSystem != null)
             {

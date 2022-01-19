@@ -11,6 +11,9 @@ public class MapEditor : MonoBehaviour
     //読み込んだスプライト
     Sprite[] sprites = null;
 
+    //読み込んだスプライトの１タイルに対する大きさ（基本は１、１）
+    Vector2Int tilescale = Vector2Int.one;
+
     //ボタンを追従させる親オブジェクト
     [SerializeField] RectTransform scollobj = null;
 
@@ -81,6 +84,10 @@ public class MapEditor : MonoBehaviour
         }
         sprites = Resources.LoadAll<Sprite>(spritepath);
 
+        //PixelPerUnitの正方形を１タイルサイズとした場合のspriteの大きさを求める
+        int ppu = (int)sprites[0].pixelsPerUnit;
+        tilescale = new Vector2Int((int)sprites[0].rect.width / ppu, (int)sprites[0].rect.height / ppu);
+
         //取得したスプライトを使用してUIボタンを作成して一覧表示する
         for (int i = 0; i < sprites.Length; ++i)
         {
@@ -122,10 +129,17 @@ public class MapEditor : MonoBehaviour
                     if (MapData[y][x] >= 0)
                     {
                         float xpos = MapSize.x % 2 == 0 ? -MapSize.x / 2f + 0.5f + x : -(MapSize.x - 1) / 2f + x;
-                        float ypos = MapSize.y % 2 == 0 ? -MapSize.y / 2f - 0.5f + y : -(MapSize.y - 1) / 2f + y;
+                        float ypos = MapSize.y % 2 == 0 ? -MapSize.y / 2f + 0.5f + y : -(MapSize.y - 1) / 2f + y;
                         GameObject go = OtherData.CreateGameObject(sprites[MapData[y][x]]);
                         go.name = y + "_" + x;
-                        go.transform.position = new Vector3(xpos, ypos);
+                        if (tilescale == Vector2Int.one)
+                        {
+                            go.transform.position = new Vector3(xpos, ypos);
+                        }
+                        else
+                        {
+                            go.transform.position = new Vector3(xpos + tilescale.x / 2f - 0.5f, ypos - 0.5f);
+                        }
                     }
                     
                 }
@@ -156,6 +170,22 @@ public class MapEditor : MonoBehaviour
     }
 
     float scrollvalue = 0;
+
+    //指定された地点を基準にタイルスケールの範囲内にタイルデータがない場合true返す（指定された地点は判定に含まれない）
+    //範囲外になる場合、タイルデータがある場合falseを返す
+    private bool CheckMapdata(Vector2Int pos)
+    {
+        for(int y = 0; y < tilescale.y; ++y)
+        {
+            for(int x = 0; x < tilescale.x; ++x)
+            {
+                if (y == 0 && x == 0) continue;
+                if (pos.x + x >= MapData[0].Count || pos.y - y < 0) return false;
+                if (MapData[pos.y - y][pos.x + x] != -1) return false;
+            }
+        }
+        return true;
+    }
 
     //クリック位置にタイルを配置して、マップ情報を書き換えるマウスの処理
     private void MouseTask()
@@ -201,24 +231,61 @@ public class MapEditor : MonoBehaviour
 
             if (Input.GetMouseButton(0))
             {
-                if (MapData[ylistpos][xlistpos] == -1)
+                if (CheckMapdata(new Vector2Int(xlistpos, ylistpos)))
                 {
-                    GameObject go = OtherData.CreateGameObject(sprites[SelectTileNumber]);
-                    go.name = ylistpos + "_" + xlistpos;
-                    go.transform.position = new Vector3(xworldpos, yworldpos);
+                    if (MapData[ylistpos][xlistpos] == -1)
+                    {
+                        GameObject go = OtherData.CreateGameObject(sprites[SelectTileNumber]);
+                        go.name = ylistpos + "_" + xlistpos;
+                        if (tilescale == Vector2Int.one)
+                        {
+                            go.transform.position = new Vector3(xworldpos, yworldpos);
+                        }
+                        else
+                        {
+                            go.transform.position = new Vector3(xworldpos + tilescale.x / 2f - 0.5f, yworldpos - tilescale.y / 2 + 0.5f);
+                        }
+                    }
+                    else if (MapData[ylistpos][xlistpos] >= 0)
+                    {
+                        GameObject go = GameObject.Find(ylistpos + "_" + xlistpos);
+                        go.GetComponent<SpriteRenderer>().sprite = sprites[SelectTileNumber];
+                    }
+                    if (tilescale == Vector2Int.one)
+                    {
+                        MapData[ylistpos][xlistpos] = SelectTileNumber;
+                    }
+                    else
+                    {
+                        for (int yp = 0; yp < tilescale.y; ++yp)
+                        {
+                            for (int xp = 0; xp < tilescale.x; ++xp)
+                            {
+                                MapData[ylistpos - yp][xlistpos + xp] = -2;
+                            }
+                        }
+                        MapData[ylistpos][xlistpos] = SelectTileNumber;
+                    }
                 }
-                else if (MapData[ylistpos][xlistpos] >= 0)
-                {
-                    GameObject go = GameObject.Find(ylistpos + "_" + xlistpos);
-                    go.GetComponent<SpriteRenderer>().sprite = sprites[SelectTileNumber];
-                }
-                MapData[ylistpos][xlistpos] = SelectTileNumber;
             }
             if (Input.GetMouseButton(1) && MapData[ylistpos][xlistpos] >= 0)
             {
                 GameObject dgo = GameObject.Find(ylistpos + "_" + xlistpos);
                 Destroy(dgo.gameObject);
-                MapData[ylistpos][xlistpos] = -1;
+                if (tilescale == Vector2Int.one)
+                {
+                    MapData[ylistpos][xlistpos] = -1;
+                }
+                else
+                {
+                    for (int yp = 0; yp < tilescale.y; ++yp)
+                    {
+                        for (int xp = 0; xp < tilescale.x; ++xp)
+                        {
+                            MapData[ylistpos - yp][xlistpos + xp] = -1;
+                        }
+                    }
+                }
             }
         }
     }
@@ -232,7 +299,11 @@ public class MapEditor : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
 
-        Camera.main.transform.position += new Vector3(3 * Time.deltaTime * x, 3 * Time.deltaTime * y, 0);
+        Camera.main.transform.position += new Vector3(10 * Time.deltaTime * x, 10 * Time.deltaTime * y, 0);
+        if (Camera.main.orthographicSize < 5)
+        {
+            Camera.main.orthographicSize = 5;
+        }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -246,29 +317,33 @@ public class MapEditor : MonoBehaviour
         int PixelsPerUnit = (int)sprites[0].pixelsPerUnit;
         Texture2D tex2d = new Texture2D(PixelsPerUnit * MapSize.x, PixelsPerUnit * MapSize.y);
         //タイルデータをもとにテクスチャを埋める
+        //
+        //Unityのテクスチャは読み込むと左下を基点にする
+        //Texture2Dも左下を基点にするため
+        //forで0から回した値を最大値-1から引いて逆にしてる
         for (int y = 0; y < MapSize.y; ++y)
         {
             for (int x = 0; x < MapSize.x; ++x)
             {
-                if (MapData[y][x] != -1)
+                if (MapData[y][x] >= 0)
                 {
                     int rectposx = (int)sprites[MapData[y][x]].rect.x, rectposy = (int)sprites[MapData[y][x]].rect.y;
-
-                    for (int py = 0; py < PixelsPerUnit; ++py)
+                    int tilesizex = PixelsPerUnit * tilescale.x, tilesizey = PixelsPerUnit * tilescale.y;
+                    for (int py = 0; py < tilesizey; ++py)
                     {
-                        for (int px = 0; px < PixelsPerUnit; ++px)
+                        for (int px = 0; px < tilesizex; ++px)
                         {
-                            tex2d.SetPixel(PixelsPerUnit * x + px, PixelsPerUnit * y + py, sprites[MapData[y][x]].texture.GetPixel(rectposx + px, rectposy + py));
+                            tex2d.SetPixel(PixelsPerUnit * x + px, PixelsPerUnit * y + PixelsPerUnit - 1 - py, sprites[MapData[y][x]].texture.GetPixel(rectposx + px, rectposy + tilesizey - 1 -  py));
                         }
                     }
                 }
-                else
+                else if(MapData[y][x] != -2)
                 {
                     for (int py = 0; py < PixelsPerUnit; ++py)
                     {
                         for (int px = 0; px < PixelsPerUnit; ++px)
                         {
-                            tex2d.SetPixel((int)PixelsPerUnit * x + px, (int)PixelsPerUnit * y + py, new Color(0, 0, 0, 0));
+                            tex2d.SetPixel(PixelsPerUnit * x + px, PixelsPerUnit * y + PixelsPerUnit - 1 - py, new Color(0, 0, 0, 0));
                         }
                     }
                 }

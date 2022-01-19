@@ -5,11 +5,8 @@ using UnityEngine;
 //一定間隔で雷を光らせる
 public class FlashCtrl : MonoBehaviour
 {
-    //後ろの偽物の影のコントローラー
-    DummyCtrl dummyctrl = null;
-
-    //足場のコントローラー
-    PlatformCtrl platformctrl = null;
+    //背景のコントローラー
+    BackgroundCtrl backctrl = null;
 
     //雷の音のコントローラー
     ThunderSECtrl thundersectrl = null;
@@ -117,9 +114,7 @@ public class FlashCtrl : MonoBehaviour
                 if (time >= nextflashtime)
                 {
                     nowmode = Mode.PrimaryFlash;
-                    dummyctrl.ChangeDefaultColor();
-                    platformctrl.VisiblePlatform();
-                    platformctrl.ChangeBackColorDefault();
+                    backctrl.ChangeDefaultColor();
                     time = 0;
                     primaryflashcount = 0;
                     FlashSprite.color = new Color(1, 1, 1, PrimaryFlashValue);
@@ -130,9 +125,7 @@ public class FlashCtrl : MonoBehaviour
                 {
                     if (primaryflashcount % 2 == 0)
                     {
-                        dummyctrl.ChangeDummyColor();
-                        platformctrl.UnVisiblePlatform();
-                        platformctrl.ChangeBackColorBlack();
+                        backctrl.ChangeDummyColor();
                         FlashSprite.color = new Color(1, 1, 1, 0);
                         if (titlevisible == false && nowgamemode == GameMode.Title)
                         {
@@ -141,9 +134,7 @@ public class FlashCtrl : MonoBehaviour
                     }
                     else
                     {
-                        dummyctrl.ChangeDefaultColor();
-                        platformctrl.VisiblePlatform();
-                        platformctrl.ChangeBackColorDefault();
+                        backctrl.ChangeDefaultColor();
                         FlashSprite.color = new Color(1, 1, 1, PrimaryFlashValue);
                         if (titlevisible == false && nowgamemode == GameMode.Title)
                         {
@@ -165,9 +156,7 @@ public class FlashCtrl : MonoBehaviour
                 if (time >= SecondaryFlashRate)
                 {
                     time = 0;
-                    dummyctrl.ChangeDefaultColor();
-                    platformctrl.VisiblePlatform();
-                    platformctrl.ChangeBackColorDefault();
+                    backctrl.ChangeDefaultColor();
                     FlashSprite.color = new Color(1, 1, 1, 1);
                     nowmode = Mode.SecondaryFlash;
                     flash = true;
@@ -182,15 +171,12 @@ public class FlashCtrl : MonoBehaviour
             case Mode.SecondaryFlash:
                 float alpha = 1 - 1f * (time / SecondaryFlashTime);
                 FlashSprite.color = new Color(1, 1, 1, alpha);
-                dummyctrl.ChangeAlpha(alpha);
-                platformctrl.ChangeAlpha(alpha);
+                backctrl.ChangeAlpha((byte)(255*alpha));
                 if (time >= SecondaryFlashTime)
                 {
                     nowmode = Mode.NotFlash;
                     time = 0;
-                    dummyctrl.ChangeDummyColor();
-                    platformctrl.UnVisiblePlatform();
-                    platformctrl.ChangeBackColorBlack();
+                    backctrl.ChangeDummyColor();
                     nextflashtime = Random.Range(FlashInterval.x, FlashInterval.y);
                     FlashSprite.color = new Color(1, 1, 1, 0);
                     flash = false;
@@ -202,8 +188,7 @@ public class FlashCtrl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dummyctrl = GetComponent<DummyCtrl>();
-        platformctrl = GetComponent<PlatformCtrl>();
+        backctrl = GetComponent<BackgroundCtrl>();
         thundersectrl = GetComponent<ThunderSECtrl>();
         nextflashtime = 3f;
     }
@@ -240,7 +225,6 @@ public class FlashCtrl : MonoBehaviour
     {
         nowmode = Mode.StopFlash;
         FlashSprite.color = new Color(1, 1, 1, 1);
-        dummyctrl.ChangeDefaultColor();
-        platformctrl.VisiblePlatform();
+        backctrl.ChangeDefaultColor();
     }
 }
