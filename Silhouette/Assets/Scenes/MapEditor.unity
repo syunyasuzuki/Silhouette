@@ -266,7 +266,6 @@ MonoBehaviour:
   MapSize: {x: 200, y: 20}
   ExportFolderName: 
   ExportPNGName: Zimen
-  IsColliderPNG: 0
   CameraMove: 1
 --- !u!4 &360057421
 Transform:
@@ -387,7 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2c1570f5e5efb439ae29763997f107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1947335202}
+  Target: {fileID: 0}
   Freeze_X: 0
   Freeze_Y: 1
   Clamp_X: {x: -82.22222, y: 82.22222}
