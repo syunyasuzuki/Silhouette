@@ -15,7 +15,7 @@ public class BackgroundCtrl : MonoBehaviour
 
     [SerializeField] GameObject Target = null;
 
-    private Rigidbody2D TargetRid2 = null;
+    private float x = 0;
 
     /// <summary>
     /// 偽物のa値を変える
@@ -64,16 +64,19 @@ public class BackgroundCtrl : MonoBehaviour
         }
 
         ChangeDummyColor();
-        TargetRid2 = Target.GetComponent<Rigidbody2D>();
+
+        x = Target.transform.position.x;
     }
 
     private void Update()
     {
+        float x2 = Target.transform.position.x - x;
+        x = Target.transform.position.x;
         for(int i = 0; i < Background.Length; ++i)
         {
             if (i > 0)
             {
-                Background[i].transform.position += new Vector3(-TargetRid2.velocity.x * Time.deltaTime / (i + 1), 0, 0);
+                Background[i].transform.position += new Vector3(-x2 / (i + 1), 0, 0);
             }
 
             if (Mathf.Abs(Target.transform.position.x - Background[i].transform.position.x) >= 28.8 * 2.1f)

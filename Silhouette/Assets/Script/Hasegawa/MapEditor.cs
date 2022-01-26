@@ -20,8 +20,14 @@ public class MapEditor : MonoBehaviour
     //素材までのフォルダーの名前
     [SerializeField] string SpriteSheetFolderName = "";
 
-    //素材の名前
-    [SerializeField] string SpriteSheetName = "";
+    private enum SheetName
+    {
+        Plane = 0,
+        Object = 1,
+        Collider = 2
+    }
+
+    [SerializeField] SheetName sheetname = SheetName.Plane;
 
     //UI配置する際の親オブジェクト
     private GameObject Canvas = null;
@@ -70,6 +76,9 @@ public class MapEditor : MonoBehaviour
     //書き出し時のPNGの名前
     [SerializeField] string ExportPNGName = "Test";
 
+    //当たり判定用に書き出すか
+    [SerializeField] bool IsColliderPNG = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,10 +86,22 @@ public class MapEditor : MonoBehaviour
         Canvas = GameObject.Find("Canvas");
 
         //指定されたスプライトを取得する
-        string spritepath = SpriteSheetName;
+        string spritepath = "";
+        switch (sheetname)
+        {
+            case SheetName.Plane:
+                spritepath = "tileset2";
+                break;
+            case SheetName.Object:
+                spritepath = "bush tree";
+                break;
+            case SheetName.Collider:
+                spritepath = "tileset2_collider";
+                break;
+        }
         if(SpriteSheetFolderName!=null || SpriteSheetFolderName != "")
         {
-            spritepath = SpriteSheetFolderName + "/" + SpriteSheetName;
+            spritepath = SpriteSheetFolderName + "/" + spritepath;
         }
         sprites = Resources.LoadAll<Sprite>(spritepath);
 
@@ -359,7 +380,13 @@ public class MapEditor : MonoBehaviour
         {
             pngpath += "/" + ExportFolderName;
         }
-        pngpath += "/" + ExportPNGName + ".png";
+        pngpath += "/" + ExportPNGName;
+        if (IsColliderPNG)
+        {
+            pngpath += "_Collider";
+        }
+        pngpath += ".png";
+        
         Debug.Log(pngpath);
         //pngを書き出し
         File.WriteAllBytes(pngpath, bytedata);

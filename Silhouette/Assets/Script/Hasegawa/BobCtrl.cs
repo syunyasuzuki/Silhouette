@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//対象の
 public class BobCtrl : MonoBehaviour
 {
     //普段の移動速度
@@ -16,6 +15,8 @@ public class BobCtrl : MonoBehaviour
 
     private void UnActivZanzou()
     {
+        if (!bobzanzou[0].activeSelf) return;
+
         for(int i = 0; i < bobzanzou.Length; ++i)
         {
             bobzanzou[i].SetActive(false);
@@ -26,10 +27,10 @@ public class BobCtrl : MonoBehaviour
     private float nowvectorx = 1;
 
     //
-    private float AvoidCooltime = 3f;
+    private float AvoidCooltime = 0.5f;
 
     //
-    private float AvoidTime = 0.3f;
+    private float AvoidTime = 0.2f;
 
     //回避時の速度
     private float AvoidPower = 20f;
@@ -42,12 +43,18 @@ public class BobCtrl : MonoBehaviour
     private void Start()
     {
         rid2 = GetComponent<Rigidbody2D>();
+        PhysicsMaterial2D pm2 = new PhysicsMaterial2D();
+        pm2.bounciness = 0;
+        pm2.friction = 0;
+        GetComponent<BoxCollider2D>().sharedMaterial = pm2;
+
         bobzanzou = new GameObject[5];
         for(int i = 0; i < bobzanzou.Length; ++i)
         {
             bobzanzou[i] = new GameObject("zanzou" + i);
             bobzanzou[i].AddComponent<SpriteRenderer>().sprite = bob;
             bobzanzou[i].GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1f / bobzanzou.Length * (i + 1));
+            bobzanzou[i].GetComponent<SpriteRenderer>().sortingOrder = 9;
         }
         UnActivZanzou();
     }
@@ -75,7 +82,6 @@ public class BobCtrl : MonoBehaviour
             UnActivZanzou();
             rid2.velocity = new Vector2(MoveSpeed * x, rid2.velocity.y);
 
-
             if (cooltime <= 0 && Input.GetKeyDown(KeyCode.Space))
             {
                 cooltime = AvoidCooltime;
@@ -91,7 +97,7 @@ public class BobCtrl : MonoBehaviour
             {
                 bobzanzou[n].SetActive(true);
                 bobzanzou[n].transform.position = gameObject.transform.position;
-                bobzanzou[n].transform.localScale = new Vector3(x, 1, 1);
+                bobzanzou[n].transform.localScale = new Vector3(nowvectorx, 1, 1);
             }
         }
     }
