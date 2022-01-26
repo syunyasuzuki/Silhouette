@@ -76,12 +76,13 @@ public class MapEditor : MonoBehaviour
     //書き出し時のPNGの名前
     [SerializeField] string ExportPNGName = "Test";
 
-    //当たり判定用に書き出すか
-    [SerializeField] bool IsColliderPNG = false;
-
     // Start is called before the first frame update
     void Start()
     {
+
+        //見やすいようにカメラの色を変更
+        Camera.main.backgroundColor = new Color32(255, 255, 255, 255);
+
         //UIのCanvasを取得
         Canvas = GameObject.Find("Canvas");
 
@@ -381,7 +382,7 @@ public class MapEditor : MonoBehaviour
             pngpath += "/" + ExportFolderName;
         }
         pngpath += "/" + ExportPNGName;
-        if (IsColliderPNG)
+        if (sheetname == SheetName.Collider)
         {
             pngpath += "_Collider";
         }
