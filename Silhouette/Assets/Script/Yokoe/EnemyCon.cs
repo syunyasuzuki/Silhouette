@@ -81,7 +81,9 @@ public class EnemyCon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //オーラの強弱の切り替え
         color_switch = false;
+        //ゲームオーバ時の演出
         gameover_switch=false;
 
         //アニメーター取得
@@ -114,7 +116,6 @@ public class EnemyCon : MonoBehaviour
         {
             Enemy_move();
             Enemy_alphaChange();
-            Debug.Log("DeadPoint_ctr.hide_check:" + DeadPoint_ctr.hide_check);
         }
         else
         {
@@ -191,7 +192,6 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     void Enemy_aura()
     {
-        Debug.Log("起動");
         if (color_switch)
         {
             red += aura_speed * Time.deltaTime;
@@ -215,7 +215,6 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     public void Enemy_Eat()
     {
-        Debug.Log("color_switch:" + color_switch);
         red +=eat_red_speed*Time.deltaTime;
         if (red >= 1.0f) 
         {

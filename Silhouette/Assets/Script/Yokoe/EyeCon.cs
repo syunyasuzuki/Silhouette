@@ -46,7 +46,7 @@ public class EyeCon : MonoBehaviour
 
         //Random_pos();
         //StartCoroutine(nameof(Move_Delay));
-        
+
     }
 
     // Update is called once per frame
@@ -55,7 +55,7 @@ public class EyeCon : MonoBehaviour
         //敵の胴体とターゲットの座標を取得
         enemy_pos = Enemybody.transform.position;
         target_pos = enemycon.target.transform.position;
-        
+
         Eye_move();
         //Move_Ramdom();
 

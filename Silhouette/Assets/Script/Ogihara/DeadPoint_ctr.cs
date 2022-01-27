@@ -19,7 +19,7 @@ public class DeadPoint_ctr : MonoBehaviour
     void Start()
     {
         exc_mark_check = false;
-        hide_check = false;
+        hide_check = true;
         flashcon = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
         alpha = 0;
         exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
