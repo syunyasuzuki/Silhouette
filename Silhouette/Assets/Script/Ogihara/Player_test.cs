@@ -47,7 +47,7 @@ public class Player_test : MonoBehaviour
                 animator.SetFloat("WalkFloat", 0.0f);
             }
 
-            if (flashcon_player.GetFlash() == true && DeadPoint_ctr.found_check == false)
+            if (flashcon_player.GetFlash() == true && DeadPoint_ctr.hide_check == false)
             {
                 rig2D.isKinematic = true;
                 rig2D.velocity = Vector2.zero;

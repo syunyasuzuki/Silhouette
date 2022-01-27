@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class DeadPoint_ctr : MonoBehaviour
 {
-    public static bool found_check;
+    /// <summary>
+    /// 隠れているとき　true
+    /// </summary>
+    public static bool hide_check;
     [SerializeField] GameObject exc_mark;
     float alpha;
     FlashCtrl flashcon;
@@ -16,7 +19,7 @@ public class DeadPoint_ctr : MonoBehaviour
     void Start()
     {
         exc_mark_check = false;
-        found_check = false;
+        hide_check = true;
         flashcon = GameObject.Find("ThunderClouds").GetComponent<FlashCtrl>();
         alpha = 0;
         exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
@@ -26,8 +29,9 @@ public class DeadPoint_ctr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (flashcon.GetFlash() == true && found_check == false)
+        if (flashcon.GetFlash() == true && hide_check == false)
         {
+            GetComponent<Collider2D>().enabled = false;
             alpha = 1;
             flashcon.StopFlash();
             exc_mark.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, alpha);
@@ -42,7 +46,7 @@ public class DeadPoint_ctr : MonoBehaviour
     {
         if (col.gameObject.tag == "Wall")
         {
-            found_check = true;
+            hide_check = true;
         }
     }
 
@@ -50,7 +54,7 @@ public class DeadPoint_ctr : MonoBehaviour
     {
         if (col.gameObject.tag == "Wall")
         {          
-            found_check = false;
+            hide_check = false;
         }
     }
 }
