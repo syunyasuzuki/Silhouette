@@ -109,11 +109,12 @@ public class EnemyCon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //プレイヤーが動けるとき
+        //ゲームがスタートしたら
        if(Player_test.game_check)
         {
             Enemy_move();
             Enemy_alphaChange();
+            Debug.Log("DeadPoint_ctr.hide_check:" + DeadPoint_ctr.hide_check);
         }
         else
         {
@@ -136,6 +137,7 @@ public class EnemyCon : MonoBehaviour
         }
         else
         {
+            //敵　拡大
             gameObject.GetComponent<SpriteRenderer>().sortingOrder = 9;
             transform.localScale = new Vector3(gameover_scale, gameover_scale, 0);
             transform.position = new Vector3(target.transform.position.x, 0, transform.position.z);
@@ -165,7 +167,7 @@ public class EnemyCon : MonoBehaviour
             {
                 enemy_alpha -= alpha_speed * Time.deltaTime;
             }
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
+            GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, enemy_alpha);
             eye_back.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
             eye.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         }
@@ -173,10 +175,14 @@ public class EnemyCon : MonoBehaviour
         {
             //光っているとき
             enemy_alpha = 1.0f;
-            Enemy_aura();
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(red, 0.0f, 0.0f, enemy_alpha);
+            GetComponent<SpriteRenderer>().color = new Color(red, 0.0f, 0.0f, enemy_alpha);
             eye_back.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, enemy_alpha);
             eye.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, enemy_alpha);
+
+            if (DeadPoint_ctr.hide_check)
+            {
+                Enemy_aura();
+            }
         }
     }
 
@@ -185,7 +191,8 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     void Enemy_aura()
     {
-        if(color_switch)
+        Debug.Log("起動");
+        if (color_switch)
         {
             red += aura_speed * Time.deltaTime;
             if (red >= 0.5f)
@@ -193,7 +200,7 @@ public class EnemyCon : MonoBehaviour
                 color_switch = false;
             }
         }
-        if(!color_switch)
+        if (!color_switch)
         {
             red -= aura_speed * Time.deltaTime;
             if (red <= 0.2f)
@@ -208,8 +215,8 @@ public class EnemyCon : MonoBehaviour
     /// </summary>
     public void Enemy_Eat()
     {
+        Debug.Log("color_switch:" + color_switch);
         red +=eat_red_speed*Time.deltaTime;
-       
         if (red >= 1.0f) 
         {
             animator.SetFloat("EatFloat", 0.5f);
