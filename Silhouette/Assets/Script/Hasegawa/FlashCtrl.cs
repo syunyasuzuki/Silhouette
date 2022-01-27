@@ -172,6 +172,10 @@ public class FlashCtrl : MonoBehaviour
                 float alpha = 1 - 1f * (time / SecondaryFlashTime);
                 FlashSprite.color = new Color(1, 1, 1, alpha);
                 backctrl.ChangeAlpha((byte)(255*alpha));
+                if(time >= SecondaryFlashTime - SecondaryFlashTime / 10)
+                {
+                    flash = false;
+                }
                 if (time >= SecondaryFlashTime)
                 {
                     nowmode = Mode.NotFlash;
@@ -179,7 +183,7 @@ public class FlashCtrl : MonoBehaviour
                     backctrl.ChangeDummyColor();
                     nextflashtime = Random.Range(FlashInterval.x, FlashInterval.y);
                     FlashSprite.color = new Color(1, 1, 1, 0);
-                    flash = false;
+                    
                 }
                 break;
         }

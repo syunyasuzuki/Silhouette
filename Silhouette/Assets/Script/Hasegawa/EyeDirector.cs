@@ -102,7 +102,8 @@ public class EyeDirector : MonoBehaviour
                     GameObject e = Instantiate(EyeBody);
                     e.transform.position = new Vector3(float.Parse(edata[0]), float.Parse(edata[1]), 0);
                     e.transform.localScale = new Vector3(float.Parse(edata[2]), float.Parse(edata[3]), 1);
-                    e.GetComponent<EyeCtrl>().SetEyes(p, c, int.Parse(edata[4]) * 10, false);
+                    e.GetComponent<EyeCtrl>().SetEyes(p, c, 0, false);
+                    //e.GetComponent<EyeCtrl>().SetEyes(p, c, int.Parse(edata[4]) * 10, false);
                 }
                 break;
             case Mode.RandomMoveMode:
@@ -126,7 +127,8 @@ public class EyeDirector : MonoBehaviour
                     GameObject e = Instantiate(EyeBody);
                     e.transform.position = new Vector3(float.Parse(edata[0]), float.Parse(edata[1]), 0);
                     e.transform.localScale = new Vector3(float.Parse(edata[2]), float.Parse(edata[3]), 1);
-                    e.GetComponent<EyeCtrl>().SetEyes(p, c, int.Parse(edata[4]) * 10, true);
+                    e.GetComponent<EyeCtrl>().SetEyes(p, c, 0, true);
+                    //e.GetComponent<EyeCtrl>().SetEyes(p, c, int.Parse(edata[4]) * 10, true);
                     e.GetComponent<EyeCtrl>().SetEyeState(Random.Range(0.05f, 0.1f), Random.Range(0.1f, 0.2f));
                 }
                 break;
